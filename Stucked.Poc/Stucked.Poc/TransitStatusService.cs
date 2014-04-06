@@ -31,19 +31,11 @@ namespace Stucked.Poc
 
                 char[] delimiterChars2 = { '=' };
                 var statusList = new List<TransitStatus>();
+
                 for (int i = 0; i < words.Length -1; i++)
                 {
                     string[] kv = words[i].Split(delimiterChars2);
-                    if (kv.Length == 2)
-                    {
-                        var statusItem = new TransitStatus { 
-                            Key = kv[0], 
-                            Value = kv[1], 
-                            Type = this.AnalyzeTransitStatusItem(kv[0])
-                        };
-
-                        statusList.Add(statusItem);
-                    }
+                    statusList.Add(GetStatusItem(kv));
                 }
 
                 return statusList;
@@ -52,6 +44,37 @@ namespace Stucked.Poc
             {
                 throw new ApplicationException(string.Format("Error getting the remote file from AUSA. {0}", e.Message));
             }
+        }
+
+        private TransitStatus GetStatusItem(string[] kv)
+        {
+            TransitStatus statusItem = null;
+            
+            if (kv.Length == 2)
+            {
+                statusItem = new TransitStatus
+                {
+                    Key = kv[0],
+                    Value = kv[1],
+                    Type = this.AnalyzeTransitStatusItem(kv[0])
+                };
+            }
+            else
+            {
+                statusItem = new TransitStatus
+                {
+                    Key = string.Empty,
+                    Value = string.Empty,
+                    Type = string.Empty
+                };
+            }
+
+            return statusItem;
+        }
+
+        public List<TransitStatus> CheckSpecificHighway()
+        {
+            throw new NotImplementedException();
         }
 
         private string AnalyzeTransitStatusItem(string item)
@@ -68,11 +91,6 @@ namespace Stucked.Poc
             }
 
             return response;
-        }
-
-        public List<TransitStatus> CheckSpecificHighway()
-        {
-            throw new NotImplementedException();
         }
     }
 }

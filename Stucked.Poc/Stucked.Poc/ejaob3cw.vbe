@@ -15,7 +15,6 @@ namespace Stucked.Poc
 
             var measurePoints = new List<TransitStatus>();
             var actualSign = string.Empty;
-            var actualMessage = string.Empty;
 
             foreach (var item in trafficStatus)
             {
@@ -23,19 +22,14 @@ namespace Stucked.Poc
 	            {
                     if (item.Key.Substring(0, item.Key.IndexOf("_")) == actualSign)
                     {
-                        actualMessage += " " + item.Value;
-                    }
-                    else
-                    {
-                        //System.Console.WriteLine("Type : {0} | Key: {1} | Value: {2}",
-                        //    item.Type, item.Key, item.Value);
-
-                        System.Console.WriteLine(actualMessage);
-                        actualMessage = string.Empty;
+                        
                     }
 
-                    actualSign = item.Key.Substring(0, item.Key.IndexOf("_"));
+                    actualSign = item.Key.Substring(0, item.Key.IndexOf("_");
 	            }
+
+                System.Console.WriteLine("Type : {0} | Key: {1} | Value: {2}", 
+                    item.Type, item.Key, item.Value);
             }
 
             Console.WriteLine("Press any key to exit.");
