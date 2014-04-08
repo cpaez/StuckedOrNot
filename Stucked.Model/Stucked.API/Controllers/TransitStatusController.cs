@@ -38,7 +38,10 @@ namespace Stucked.API.Controllers
                 for (int i = 0; i < rawStatusList.Length - 1; i++)
                 {
                     string[] kv = rawStatusList[i].Split(delimiterChars2);
-                    statusList.Add(this.GetStatusItem(kv));
+                    var item = this.GetStatusItem(kv);
+
+                    if(item != null)
+                        statusList.Add(item);
                 }
 
                 return statusList;
@@ -62,10 +65,6 @@ namespace Stucked.API.Controllers
             if (kv.Length == 2)
             {
                 statusItem = new TransitStatus(kv[0], kv[1]);
-            }
-            else
-            {
-                statusItem = new TransitStatus(string.Empty, string.Empty);
             }
 
             return statusItem;
