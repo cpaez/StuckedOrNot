@@ -11,9 +11,7 @@ namespace Stucked.Model
     public class TransitStatus
     {
         public TransitStatus()
-        {
-
-        }
+        { }
 
         public TransitStatus(string key, string value)
         {
