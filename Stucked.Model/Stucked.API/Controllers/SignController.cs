@@ -58,23 +58,23 @@ namespace Stucked.API.Controllers
                         {
                             if (oldSignScreen != currentSignScreen)
                             {
-                                messages = new List<string>();
-
                                 var currentScreen = new Screen();
                                 currentScreen.Icon = currentIcon;
                                 currentScreen.Number = currentSignScreen;
                                 currentScreen.Messages = messages;
+
+                                messages = new List<string>();
 
                                 screenList.Add(currentScreen);
                             }
 
                             if (oldSignName != currentSignName)
                             {
-                                screenList = new List<Screen>();
-
                                 var currentSign = new Sign();
                                 currentSign.Name = currentSignName;
                                 currentSign.Screens = screenList;
+
+                                screenList = new List<Screen>();
 
                                 signList.Add(currentSign);
                             }
