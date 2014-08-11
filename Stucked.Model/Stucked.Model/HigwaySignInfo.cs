@@ -5,9 +5,9 @@ using System.Text;
 
 namespace Stucked.Model
 {
-    public class Sign
+    public class HighwaySignInfo
     {
-        public Sign()
+        public HighwaySignInfo()
         {
             this.Screens = new List<Screen>();
         }

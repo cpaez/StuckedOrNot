@@ -40,7 +40,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Sign.cs" />
+    <Compile Include="HighwaySign.cs" />
+    <Compile Include="HigwaySignInfo.cs" />
     <Compile Include="TransitStatus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

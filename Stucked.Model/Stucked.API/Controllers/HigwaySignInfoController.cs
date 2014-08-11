@@ -11,12 +11,12 @@ using System.Diagnostics;
 
 namespace Stucked.API.Controllers
 {
-    public class SignController : ApiController
+    public class HighwaySignInfoController : ApiController
     {
         string serviceUrl = ConfigurationManager.AppSettings["AusaServiceUrl"];
 
         // GET api/sign
-        public IEnumerable<Sign> Get()
+        public IEnumerable<HighwaySignInfo> Get()
         {
             try
             {
@@ -34,7 +34,7 @@ namespace Stucked.API.Controllers
                 string[] rawStatusList = remoteFile.Split(delimiterChars);
                 char[] delimiterChars2 = { '=' };
 
-                var signList = new List<Sign>();
+                var signList = new List<HighwaySignInfo>();
                 var screenList = new List<Screen>();
                 var messages = new List<string>();
                 
@@ -70,7 +70,7 @@ namespace Stucked.API.Controllers
 
                             if (oldSignName != currentSignName)
                             {
-                                var currentSign = new Sign();
+                                var currentSign = new HighwaySignInfo();
                                 currentSign.Name = currentSignName;
                                 currentSign.Screens = screenList;
 
@@ -116,9 +116,9 @@ namespace Stucked.API.Controllers
         }
 
         // GET api/sign/5
-        public Sign Get(int id)
+        public HighwaySignInfo Get(int id)
         {
-            return new Sign { 
+            return new HighwaySignInfo { 
                 Name = "CPMV001",
                 Screens = new List<Screen>()
             };
