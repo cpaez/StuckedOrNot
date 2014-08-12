@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stucked.API.Tests", "Stucke
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stucked.API", "Stucked.API\Stucked.API.csproj", "{FCA95C1F-B8AE-4A07-A43D-0376D1F96B61}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stucked.DataAccess", "Stucked.DataAccess\Stucked.DataAccess.csproj", "{594A8052-84CB-46F7-B4B9-37FC9FEC9A0C}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{FCA95C1F-B8AE-4A07-A43D-0376D1F96B61}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FCA95C1F-B8AE-4A07-A43D-0376D1F96B61}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FCA95C1F-B8AE-4A07-A43D-0376D1F96B61}.Release|Any CPU.Build.0 = Release|Any CPU
+		{594A8052-84CB-46F7-B4B9-37FC9FEC9A0C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{594A8052-84CB-46F7-B4B9-37FC9FEC9A0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{594A8052-84CB-46F7-B4B9-37FC9FEC9A0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{594A8052-84CB-46F7-B4B9-37FC9FEC9A0C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
