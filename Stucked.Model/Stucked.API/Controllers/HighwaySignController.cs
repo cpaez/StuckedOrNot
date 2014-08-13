@@ -4,34 +4,38 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Web.Http;
+using Stucked.Model;
+using Stucked.DataAccess;
 
 namespace Stucked.API.Controllers
 {
     public class HighwaySignController : ApiController
     {
-        // GET api/sign
-        public IEnumerable<string> Get()
+        private StuckedContext db = new StuckedContext();
+
+        // GET api/highwaysign
+        public IEnumerable<HighwaySign> Get()
         {
-            return new string[] { "value1", "value2" };
+            return db.HigwaySigns.ToList();
         }
 
-        // GET api/sign/5
+        // GET api/highwaysign/5
         public string Get(int id)
         {
             return "value";
         }
 
-        // POST api/sign
+        // POST api/highwaysign
         public void Post([FromBody]string value)
         {
         }
 
-        // PUT api/sign/5
+        // PUT api/highwaysign/5
         public void Put(int id, [FromBody]string value)
         {
         }
 
-        // DELETE api/sign/5
+        // DELETE api/highwaysign/5
         public void Delete(int id)
         {
         }
