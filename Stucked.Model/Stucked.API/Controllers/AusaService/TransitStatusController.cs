@@ -19,8 +19,6 @@ namespace Stucked.API.Controllers
         {
             try
             {
-                
-                
                 var remoteFile = string.Empty;
                 var webRequest = WebRequest.Create(@serviceUrl);
 

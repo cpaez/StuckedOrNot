@@ -32,6 +32,7 @@
   <ItemGroup>
     <Reference Include="Newtonsoft.Json, Version=4.5.0.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL" />
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
@@ -42,8 +43,10 @@
   <ItemGroup>
     <Compile Include="Highway.cs" />
     <Compile Include="HighwaySign.cs" />
-    <Compile Include="HigwaySignInfo.cs" />
-    <Compile Include="TransitStatus.cs" />
+    <Compile Include="MeasurePoints.cs" />
+    <Compile Include="AusaService\RawSignInformation.cs" />
+    <Compile Include="SignInformation.cs" />
+    <Compile Include="AusaService\TransitStatus.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

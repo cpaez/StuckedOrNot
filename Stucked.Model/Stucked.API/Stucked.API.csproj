@@ -170,8 +170,8 @@
     <Compile Include="Controllers\HighwaySignController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\HighwayController.cs" />
-    <Compile Include="Controllers\HigwaySignInfoController.cs" />
-    <Compile Include="Controllers\TransitStatusController.cs" />
+    <Compile Include="Controllers\AusaService\HigwaySignInfoController.cs" />
+    <Compile Include="Controllers\AusaService\TransitStatusController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>

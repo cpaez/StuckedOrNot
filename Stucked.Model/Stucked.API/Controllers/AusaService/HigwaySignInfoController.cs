@@ -16,7 +16,7 @@ namespace Stucked.API.Controllers
         string serviceUrl = ConfigurationManager.AppSettings["AusaServiceUrl"];
 
         // GET api/sign
-        public IEnumerable<HighwaySignInfo> Get()
+        public IEnumerable<RawSignInformation> Get()
         {
             try
             {
@@ -34,7 +34,7 @@ namespace Stucked.API.Controllers
                 string[] rawStatusList = remoteFile.Split(delimiterChars);
                 char[] delimiterChars2 = { '=' };
 
-                var signList = new List<HighwaySignInfo>();
+                var signList = new List<RawSignInformation>();
                 var screenList = new List<Screen>();
                 var messages = new List<string>();
                 
@@ -70,7 +70,7 @@ namespace Stucked.API.Controllers
 
                             if (oldSignName != currentSignName)
                             {
-                                var currentSign = new HighwaySignInfo();
+                                var currentSign = new RawSignInformation();
                                 currentSign.Name = currentSignName;
                                 currentSign.Screens = screenList;
 
@@ -116,9 +116,9 @@ namespace Stucked.API.Controllers
         }
 
         // GET api/sign/5
-        public HighwaySignInfo Get(int id)
+        public RawSignInformation Get(int id)
         {
-            return new HighwaySignInfo { 
+            return new RawSignInformation { 
                 Name = "CPMV001",
                 Screens = new List<Screen>()
             };
