@@ -1,0 +1,55 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+    <style type="text/css">
+        html {
+            height: 100%;
+        }
+
+        body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        #map-canvas {
+            height: 100%;
+        }
+    </style>
+    <script type="text/javascript" src="Scripts/jquery-1.8.2.js"></script>
+    <script type="text/javascript"
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCU0StBBcUyQokBbGN1BVQ-fUDPBsqI4yA"></script>
+
+    <script>
+        function initialize() {
+            $.getJSON("http://localhost:54458/API/HighwaySign", function (data) {
+                
+                // Create a simple map.
+                var map = new google.maps.Map(document.getElementById('map-canvas'), {
+                    zoom: 12,
+                    center: { lat: -34.60325, lng: -58.51550 }
+                });
+                
+                // loop into each sign
+                $.each(data, function (key, value) {
+                    var json = JSON.parse(value.GeoJson);
+                    var currentLatlng = new google.maps.LatLng(json.coordinates[1], json.coordinates[0]);
+
+                    // create a marker for the current sign
+                    var marker = new google.maps.Marker({
+                        position: currentLatlng,
+                        map: map,
+                        title: value.Name
+                    });
+                });
+            });
+        }
+
+        google.maps.event.addDomListener(window, 'load', initialize);
+    </script>
+</head>
+<body>
+    <div id="map-canvas" />
+</body>
+</html>
