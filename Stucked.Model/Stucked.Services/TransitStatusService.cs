@@ -46,13 +46,13 @@ namespace Stucked.Services
             switch (status)
             {
                 case "FFFFFF":
-                    color = "white";
-                    break;
-                case "008000":
                     color = "green";
                     break;
-                case "FFFF00":
+                case "008000":
                     color = "yellow";
+                    break;
+                case "FFFF00":
+                    color = "orange";
                     break;
                 case "FF0000":
                     color = "red";
