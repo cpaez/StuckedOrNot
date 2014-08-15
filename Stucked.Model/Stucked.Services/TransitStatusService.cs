@@ -41,24 +41,29 @@ namespace Stucked.Services
 
         protected string GetColorByStatus(string status)
         {
-            var color = "white";
+            var smoothTransit = ConfigurationManager.AppSettings["SmoothTransit"];
+            var slowTransit = ConfigurationManager.AppSettings["SlowTransit"];
+            var delayedTransit = ConfigurationManager.AppSettings["DelayedTransit"];
+            var stuckedTransit = ConfigurationManager.AppSettings["StuckedTransit"];
+
+            var color = smoothTransit;
 
             switch (status)
             {
                 case "FFFFFF":
-                    color = "green";
+                    color = smoothTransit;
                     break;
                 case "008000":
-                    color = "yellow";
+                    color = slowTransit;
                     break;
                 case "FFFF00":
-                    color = "orange";
+                    color = delayedTransit;
                     break;
                 case "FF0000":
-                    color = "red";
+                    color = stuckedTransit;
                     break;
                 default:
-                    color = "white";
+                    color = smoothTransit;
                     break;
             }
 
