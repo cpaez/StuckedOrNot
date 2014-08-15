@@ -1,6 +1,7 @@
 ﻿<!DOCTYPE html>
 <html>
 <head>
+    <title>BA Highway Signs</title>
     <meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
     <style type="text/css">
         html {
@@ -28,18 +29,21 @@
 
             $.getJSON(url, function (data) {
 
-                var buenosAiresLatlng = new google.maps.LatLng(-34.61530, -58.51550);
+                var buenosAires = new google.maps.LatLng(-34.61530, -58.51550);
                 
                 // Create a simple map
                 var map = new google.maps.Map(document.getElementById('map-canvas'), {
                     zoom: 12,
-                    center: buenosAiresLatlng
+                    center: buenosAires
                 });
                 
                 // loop into each sign
                 $.each(data, function (key, value) {
                     var json = JSON.parse(value.GeoJson);
-                    var currentLatlng = new google.maps.LatLng(json.coordinates[1], json.coordinates[0]);
+
+                    var lat = json.coordinates[1];
+                    var long = json.coordinates[0];
+                    var currentLatlng = new google.maps.LatLng(lat, long);
 
                     // create a marker for the current sign
                     var marker = new google.maps.Marker({
