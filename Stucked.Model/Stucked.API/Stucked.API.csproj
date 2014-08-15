@@ -312,6 +312,10 @@
       <Project>{18fb2dd7-2a2c-4f8a-b81c-57cd1feb8c32}</Project>
       <Name>Stucked.Model</Name>
     </ProjectReference>
+    <ProjectReference Include="..\Stucked.Services\Stucked.Services.csproj">
+      <Project>{521dee44-d8c6-4de2-a53e-d01ae9a5835f}</Project>
+      <Name>Stucked.Services</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />

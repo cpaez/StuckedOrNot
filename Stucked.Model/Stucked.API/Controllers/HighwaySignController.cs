@@ -24,20 +24,5 @@ namespace Stucked.API.Controllers
         {
             return "value";
         }
-
-        // POST api/highwaysign
-        public void Post([FromBody]string value)
-        {
-        }
-
-        // PUT api/highwaysign/5
-        public void Put(int id, [FromBody]string value)
-        {
-        }
-
-        // DELETE api/highwaysign/5
-        public void Delete(int id)
-        {
-        }
     }
 }

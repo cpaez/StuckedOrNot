@@ -6,38 +6,31 @@ using System.Net.Http;
 using System.Web.Http;
 using Stucked.Model;
 using Stucked.DataAccess;
+using Stucked.Services;
 
 namespace Stucked.API.Controllers
 {
     public class HighwayController : ApiController
     {
-        private StuckedContext db = new StuckedContext();
+        public StuckedContext db { get; set; }
+        public TransitStatusService TransitStatusService { get; set; }
+
+        public HighwayController()
+        {
+            this.db = new StuckedContext();
+            this.TransitStatusService = new TransitStatusService();
+        }
 
         // GET api/sign
         public IEnumerable<Highway> Get()
         {
-            return db.Highways.ToList();
+            return this.TransitStatusService.GetTransitStatusForAllHighways();
         }
 
         // GET api/sign/5
         public string Get(int id)
         {
             return "value";
-        }
-
-        // POST api/sign
-        public void Post([FromBody]string value)
-        {
-        }
-
-        // PUT api/sign/5
-        public void Put(int id, [FromBody]string value)
-        {
-        }
-
-        // DELETE api/sign/5
-        public void Delete(int id)
-        {
         }
     }
 }
