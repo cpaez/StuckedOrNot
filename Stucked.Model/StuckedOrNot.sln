@@ -11,6 +11,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stucked.API", "Stucked.API\
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stucked.DataAccess", "Stucked.DataAccess\Stucked.DataAccess.csproj", "{594A8052-84CB-46F7-B4B9-37FC9FEC9A0C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stucked.Services", "Stucked.Services\Stucked.Services.csproj", "{521DEE44-D8C6-4DE2-A53E-D01AE9A5835F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stucked.Services.Tests", "Stucked.Services.Tests\Stucked.Services.Tests.csproj", "{B55756B6-9E44-4B1D-92BE-CFB560113E7E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +37,14 @@ Global
 		{594A8052-84CB-46F7-B4B9-37FC9FEC9A0C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{594A8052-84CB-46F7-B4B9-37FC9FEC9A0C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{594A8052-84CB-46F7-B4B9-37FC9FEC9A0C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{521DEE44-D8C6-4DE2-A53E-D01AE9A5835F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{521DEE44-D8C6-4DE2-A53E-D01AE9A5835F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{521DEE44-D8C6-4DE2-A53E-D01AE9A5835F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{521DEE44-D8C6-4DE2-A53E-D01AE9A5835F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B55756B6-9E44-4B1D-92BE-CFB560113E7E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B55756B6-9E44-4B1D-92BE-CFB560113E7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B55756B6-9E44-4B1D-92BE-CFB560113E7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B55756B6-9E44-4B1D-92BE-CFB560113E7E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
