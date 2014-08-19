@@ -23,17 +23,15 @@ namespace Stucked.Services
 
             foreach (var highway in originalHighwayList)
             {
-                var currentStatus = measurePoints.FirstOrDefault(n => n.Key == highway.Name);
                 var statusColor = "white";
+                var currentStatus = measurePoints.FirstOrDefault(n => n.Key == highway.Name);
 
                 if (currentStatus != null)
-	            {
                     statusColor = this.GetColorByStatus(currentStatus.Value);
-                }
 
                 highway.GeoJson = highway.GeoJson.Replace("\"color\": \"darkblue\"", "\"color\": \"" + statusColor + "\"");
-                finalHighwaylist.Add(highway);
 
+                finalHighwaylist.Add(highway);
             }
 
             return finalHighwaylist;

@@ -16,12 +16,29 @@
 
         #map-canvas {
             height: 100%;
+            margin: 0px;
+            padding: 0px;
         }
 
-        .VPM4011 {
-            stroke: green;
-            stroke-width: 2;
-            fill: green;
+        #legend-container {
+            font-family: Arial, sans-serif;
+            background: #fff;
+            padding: 10px;
+            margin: 10px;
+            border: 3px solid #000;
+        }
+
+            #legend-container h3 {
+                margin-top: 0;
+            }
+
+        .legend-color-box {
+            height: 20px;
+            width: 20px;
+            border-radius: 3px;
+            float: left;
+            border: 1px solid black;
+            margin-right: 6px;
         }
     </style>
     <script type="text/javascript" src="Scripts/jquery-1.8.2.js"></script>
@@ -30,6 +47,9 @@
 
     <script>
         function initialize() {
+
+            var colorValues = [['green', 'Smooth'], ['yellow', 'Slow'], ['orange', 'Delayed'], ['red','Stucked']];
+
             var url = "/API/Highway";
             //var url = "/StuckedOrNot/API/Highway";
 
@@ -50,12 +70,53 @@
                         strokeWeight: 3
                     });
                 });
-                
+
                 // loop into each highway
                 $.each(data, function (key, value) {
                     var json = JSON.parse(value.GeoJson);
 
                     map.data.addGeoJson(json, value.Name);
+                });
+
+                var infoWindow = new google.maps.InfoWindow(
+                    {
+                        content: '',
+                        size: new google.maps.Size(10, 30)
+                    });
+
+                // legend
+                
+                //get the legend container, create a legend, add a legend renderer fn
+                var $legendContainer = $('#legend-container'),
+                    $legend = $('<div id="legend">').appendTo($legendContainer),
+                    renderLegend = function (colorValuesArray) {
+                        $legend.empty();
+                        $.each(colorValuesArray, function (index, val) {
+                            var $div = $('<div style="height:25px;">').append($('<div class="legend-color-box">').css({
+                                backgroundColor: val[0],
+                            })).append($("<span>").css("lineHeight", "23px").html(val[1]));
+
+                            $legend.append($div);
+                        });
+                    }
+
+                //make a legend for the first time
+                renderLegend(colorValues);
+
+                //add the legend to the map
+                map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push($legendContainer[0]);
+
+                // legend
+
+                map.data.addListener('click', function (event) {
+                    //show an infowindow on click   
+                    infoWindow.setContent('<div style="line-height:1.35;overflow:hidden;white-space:nowrap;"> Zone: ' +
+                                                event.feature.getProperty("name") + "<br/>Status: " + event.feature.getProperty("color") + "</div>");
+
+                    var anchor = new google.maps.MVCObject();
+                    anchor.set("position", event.latLng);
+
+                    infoWindow.open(map, anchor);
                 });
             });
         }
@@ -64,6 +125,7 @@
     </script>
 </head>
 <body>
-    <div id="map-canvas" />
+    <div id="map-canvas"></div>
+    <div id="legend-container"><h3>Legend</h3></div>
 </body>
 </html>
