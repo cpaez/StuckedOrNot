@@ -48,7 +48,12 @@
     <script>
         function initialize() {
 
-            var colorValues = [['green', 'Smooth'], ['yellow', 'Slow'], ['orange', 'Delayed'], ['red','Stucked']];
+            var colorValues = [
+                { 'color': 'green', 'status': 'Smooth' },
+                { 'color': 'yellow', 'status': 'Slow' },
+                { 'color': 'orange', 'status': 'Delayed' },
+                { 'color': 'red', 'status': 'Stucked' }
+            ];
 
             var url = "/API/Highway";
             //var url = "/StuckedOrNot/API/Highway";
@@ -93,8 +98,8 @@
                         $legend.empty();
                         $.each(colorValuesArray, function (index, val) {
                             var $div = $('<div style="height:25px;">').append($('<div class="legend-color-box">').css({
-                                backgroundColor: val[0],
-                            })).append($("<span>").css("lineHeight", "23px").html(val[1]));
+                                backgroundColor: val.color,
+                            })).append($("<span>").css("lineHeight", "23px").html(val.status));
 
                             $legend.append($div);
                         });
@@ -109,9 +114,14 @@
                 // legend
 
                 map.data.addListener('click', function (event) {
+
+                    var statusValue = colorValues.filter(function (value) { 
+                        return (value.color == event.feature.getProperty("color"))
+                    });
+
                     //show an infowindow on click   
                     infoWindow.setContent('<div style="line-height:1.35;overflow:hidden;white-space:nowrap;"> Zone: ' +
-                                                event.feature.getProperty("name") + "<br/>Status: " + event.feature.getProperty("color") + "</div>");
+                                                event.feature.getProperty("name") + "<br/>Status: " + statusValue[0].status + "</div>");
 
                     var anchor = new google.maps.MVCObject();
                     anchor.set("position", event.latLng);
