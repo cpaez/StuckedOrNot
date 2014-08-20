@@ -12,6 +12,8 @@ namespace Stucked.Services
     public class TransitStatusService
     {
         private StuckedContext Context = new StuckedContext();
+
+        private string DefaultHighwayColor = "green";
         string AusaServiceUrl = ConfigurationManager.AppSettings["AusaServiceUrl"];
 
         public IEnumerable<Highway> GetTransitStatusForAllHighways()
@@ -23,7 +25,7 @@ namespace Stucked.Services
 
             foreach (var highway in originalHighwayList)
             {
-                var statusColor = "white";
+                var statusColor = this.DefaultHighwayColor;
                 var currentStatus = measurePoints.FirstOrDefault(n => n.Key == highway.Name);
 
                 if (currentStatus != null)
@@ -36,6 +38,8 @@ namespace Stucked.Services
 
             return finalHighwaylist;
         }
+
+        #region Protected Members
 
         protected string GetColorByStatus(string status)
         {
@@ -113,5 +117,7 @@ namespace Stucked.Services
 
             return statusItem;
         }
+
+        #endregion Protected Members
     }
 }

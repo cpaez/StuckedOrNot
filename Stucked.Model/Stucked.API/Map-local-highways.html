@@ -40,6 +40,12 @@
             border: 1px solid black;
             margin-right: 6px;
         }
+        #dialog-box-title {
+            font-family: Arial, sans-serif;
+            font-size: larger;
+            font-weight: bold;
+            padding-bottom: 10px;
+        }
     </style>
     <script type="text/javascript" src="Scripts/jquery-1.8.2.js"></script>
     <script type="text/javascript"
@@ -48,6 +54,7 @@
     <script>
         function initialize() {
 
+            var highways = [];
             var colorValues = [
                 { 'color': 'green', 'status': 'Smooth' },
                 { 'color': 'yellow', 'status': 'Slow' },
@@ -55,8 +62,11 @@
                 { 'color': 'red', 'status': 'Stucked' }
             ];
 
-            var url = "/API/Highway";
-            //var url = "/StuckedOrNot/API/Highway";
+            var defaultZoom = 12;
+            var defaultZoomIn = 14;
+
+            //var url = "/API/Highway";
+            var url = "/StuckedOrNot/API/Highway";
 
             $.getJSON(url, function (data) {
 
@@ -64,7 +74,7 @@
                 
                 // Create a simple map
                 var map = new google.maps.Map(document.getElementById('map-canvas'), {
-                    zoom: 12,
+                    zoom: defaultZoom,
                     center: buenosAires
                 });
 
@@ -81,6 +91,8 @@
                     var json = JSON.parse(value.GeoJson);
 
                     map.data.addGeoJson(json, value.Name);
+
+                    highways.push(value);
                 });
 
                 var infoWindow = new google.maps.InfoWindow(
@@ -119,13 +131,27 @@
                         return (value.color == event.feature.getProperty("color"))
                     });
 
-                    //show an infowindow on click   
-                    infoWindow.setContent('<div style="line-height:1.35;overflow:hidden;white-space:nowrap;"> Zone: ' +
-                                                event.feature.getProperty("name") + "<br/>Status: " + statusValue[0].status + "</div>");
+                    var item = highways.filter(function (value) {
+                        return (value.Name == event.feature.getProperty("name"))
+                    });
 
+                    var itemDescription = '<strong>From:</strong> ' + item[0].NameStart + '<br /><strong>To:</strong> ' + item[0].NameEnd;
+                    itemDescription += (item[0].Detail) ? '<br />(' + item[0].Detail + ')' : ' ';
+
+                    //show an infowindow on click   
+                    infoWindow.setContent('<div id="dialog-box-title">Current Transit Status</div><div style="line-height:1.35;overflow:hidden;white-space:nowrap;">' +
+                                               itemDescription + '<br/><strong>Status:</strong> <span style="background-color: ' + event.feature.getProperty("color") + '">&nbsp' + statusValue[0].status + '&nbsp</span></div>');
+
+                    // position the anchor
                     var anchor = new google.maps.MVCObject();
                     anchor.set("position", event.latLng);
 
+                    // zoom in & center the map
+                    var newZoom = map.getZoom() <= defaultZoom ? defaultZoomIn : map.getZoom();
+                    map.setZoom(newZoom);
+                    map.panTo(event.latLng);
+
+                    // open the info window (Current Transit Status)
                     infoWindow.open(map, anchor);
                 });
             });
