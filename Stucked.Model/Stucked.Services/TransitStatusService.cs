@@ -13,6 +13,8 @@ namespace Stucked.Services
     {
         private StuckedContext Context = new StuckedContext();
 
+        private string PointOfMeasureSeed = "V";
+        private string SignInformationSeed = "C";
         private string DefaultHighwayColor = "green";
         string AusaServiceUrl = ConfigurationManager.AppSettings["AusaServiceUrl"];
 
@@ -21,7 +23,7 @@ namespace Stucked.Services
             var finalHighwaylist = new List<Highway>();
             var originalHighwayList = this.Context.Highways.ToList();
 
-            var measurePoints = this.GetPointsOfMeasureWithCurrentStatus();
+            var measurePoints = this.GetTransitCurrentStatus(PointOfMeasureSeed);
 
             foreach (var highway in originalHighwayList)
             {
@@ -37,6 +39,33 @@ namespace Stucked.Services
             }
 
             return finalHighwaylist;
+        }
+
+        public IEnumerable<HighwaySignStatus> GetTransitStatusForAllHighwaySigns()
+        {
+            var finalHighwaySignlist = new List<HighwaySignStatus>();
+            var originalHighwaySignList = this.Context.HigwaySigns.ToList();
+
+            var signInformation = this.GetTransitCurrentStatus(SignInformationSeed);
+
+            foreach (var highwaySign in originalHighwaySignList)
+            {
+                var highwaySignStatus = new HighwaySignStatus(highwaySign);
+
+                var statusColor = this.DefaultHighwayColor;
+                var currentStatus = signInformation.Where(n => n.Key.StartsWith(highwaySign.Name));
+
+                var signMessage = string.Empty;
+                foreach (var status in currentStatus)
+                {
+                    signMessage += status.Value + ' ';
+                }
+                highwaySignStatus.Status = signMessage;
+
+                finalHighwaySignlist.Add(highwaySignStatus);
+            }
+
+            return finalHighwaySignlist;
         }
 
         #region Protected Members
@@ -72,7 +101,7 @@ namespace Stucked.Services
             return color;
         }
 
-        protected IEnumerable<TransitStatus> GetPointsOfMeasureWithCurrentStatus()
+        protected IEnumerable<TransitStatus> GetTransitCurrentStatus(string seed)
         {
             var remoteFile = string.Empty;
             var webRequest = WebRequest.Create(@AusaServiceUrl);
@@ -94,7 +123,7 @@ namespace Stucked.Services
             {
                 string[] kv = rawStatusList[i].Split(delimiterChars2);
 
-                var item = this.GetStatusItem(kv);
+                var item = this.GetStatusItem(kv, seed);
 
                 if (item != null)
                     statusList.Add(item);
@@ -103,13 +132,13 @@ namespace Stucked.Services
             return statusList;
         }
 
-        protected TransitStatus GetStatusItem(string[] kv)
+        protected TransitStatus GetStatusItem(string[] kv, string seed)
         {
             TransitStatus statusItem = null;
 
             if (kv.Length == 2)
             {
-                if (kv[0].StartsWith("V"))
+                if (kv[0].StartsWith(seed))
                 {
                     statusItem = new TransitStatus(kv[0], kv[1]);   
                 }

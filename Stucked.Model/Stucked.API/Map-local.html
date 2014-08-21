@@ -17,6 +17,14 @@
         #map-canvas {
             height: 100%;
         }
+
+        #dialog-box-title {
+            font-family: Arial, sans-serif;
+            font-size: larger;
+            font-weight: bold;
+            padding-bottom: 10px;
+        }
+
     </style>
     <script type="text/javascript" src="Scripts/jquery-1.8.2.js"></script>
     <script type="text/javascript"
@@ -24,22 +32,34 @@
 
     <script>
         function initialize() {
-            //var url = "/API/HighwaySign";
-            var url = "/StuckedOrNot/API/HighwaySign";
+            var url = "/API/HighwaySign";
+            //var url = "/StuckedOrNot/API/HighwaySign";
 
             $.getJSON(url, function (data) {
 
+                var signs = [];
                 var buenosAires = new google.maps.LatLng(-34.61530, -58.51550);
+
+                var defaultZoom = 12;
+                var defaultZoomIn = 14;
                 
                 // Create a simple map
                 var map = new google.maps.Map(document.getElementById('map-canvas'), {
                     zoom: 12,
                     center: buenosAires
                 });
+
+                // pre-set the infoWindow
+                var infoWindow = new google.maps.InfoWindow(
+                    {
+                        content: '',
+                        size: new google.maps.Size(10, 30)
+                    });
                 
                 // loop into each sign
                 $.each(data, function (key, value) {
-                    var json = JSON.parse(value.GeoJson);
+
+                    var json = JSON.parse(value.HighwaySign.GeoJson);
 
                     var lat = json.coordinates[1];
                     var long = json.coordinates[0];
@@ -49,8 +69,27 @@
                     var marker = new google.maps.Marker({
                         position: currentLatlng,
                         map: map,
-                        title: value.Name
+                        title: value.HighwaySign.Name
                     });
+
+                    // add onlick handle to generate and show the infoWindow (current sign status)
+                    google.maps.event.addListener(marker, 'click', function (event) {
+
+                        var description = value.HighwaySign.Description + ' Sentido: ' + value.HighwaySign.Direction + ' (' + value.HighwaySign.Location + ')';
+
+                        infoWindow.setContent('<div id="dialog-box-title">Current Sign Status</div><div style="line-height:1.35;overflow:hidden;white-space:nowrap;">' +
+                                                   description + '<br/><strong>Status:</strong> <span style="background-color: white">&nbsp' + value.Status + '&nbsp</span></div>');
+
+                        // zoom in & center the map
+                        var newZoom = map.getZoom() <= defaultZoom ? defaultZoomIn : map.getZoom();
+                        map.setZoom(newZoom);
+                        map.panTo(event.latLng);
+
+                        // open the infoWindow (current sign status)
+                        infoWindow.open(map, marker);
+                    });
+
+                    signs.push(value);
                 });
             });
         }

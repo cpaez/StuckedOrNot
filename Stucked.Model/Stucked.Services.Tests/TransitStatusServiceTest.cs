@@ -19,5 +19,16 @@ namespace Stucked.Services.Tests
             Assert.IsNotNull(result);
             Assert.IsInstanceOfType(result, typeof(IEnumerable<Highway>));
         }
+
+        [TestMethod]
+        public void GetTransitStatusForAllHighwaySignsTest()
+        {
+            var service = new TransitStatusService();
+
+            var result = service.GetTransitStatusForAllHighwaySigns();
+
+            Assert.IsNotNull(result);
+            Assert.IsInstanceOfType(result, typeof(IEnumerable<HighwaySignStatus>));
+        }
     }
 }

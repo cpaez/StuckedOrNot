@@ -11,8 +11,21 @@ namespace Stucked.Model
         public string Description { get; set; }
         public string SnapToRoads { get; set; }
         public string GeoJson { get; set; }
+        public string Direction { get; set; }
+        public string Location { get; set; }
 
         public Highway Highway { get; set; }
         public int HighwayId { get; set; }
+    }
+
+    public class HighwaySignStatus
+    {
+        public HighwaySignStatus(HighwaySign highwaySign)
+        {
+            this.HighwaySign = highwaySign;
+        }
+
+        public HighwaySign HighwaySign { get; set; }
+        public string Status { get; set; }
     }
 }
