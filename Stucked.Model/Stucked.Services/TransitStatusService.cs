@@ -15,9 +15,15 @@ namespace Stucked.Services
 
         private string PointOfMeasureSeed = "V";
         private string SignInformationSeed = "C";
-        private string DefaultHighwayColor = "green";
-        string AusaServiceUrl = ConfigurationManager.AppSettings["AusaServiceUrl"];
 
+        private string DefaultHighwayColor = "green";
+        private string AusaServiceUrl = ConfigurationManager.AppSettings["AusaServiceUrl"];
+
+        /// <summary>
+        /// Method that returns all the Highways with its current status (Smooth - Slow - Delayed - Stucked)
+        /// It retrieves highways found on the DB and then calls the AUSA service to get current status for each one
+        /// </summary>
+        /// <returns>List of Highways</returns>
         public IEnumerable<Highway> GetTransitStatusForAllHighways()
         {
             var finalHighwaylist = new List<Highway>();
@@ -41,6 +47,11 @@ namespace Stucked.Services
             return finalHighwaylist;
         }
 
+        /// <summary>
+        /// Method that returns a list of Highway Sign Status
+        /// It retrieves highways signs found on the DB and then calls the AUSA service to get current status for each one
+        /// </summary>
+        /// <returns>List of HighwaySignStatus</returns>
         public IEnumerable<HighwaySignStatus> GetTransitStatusForAllHighwaySigns()
         {
             var finalHighwaySignlist = new List<HighwaySignStatus>();

@@ -12,12 +12,12 @@ namespace Stucked.API.Controllers
 {
     public class HighwayController : ApiController
     {
-        public StuckedContext db { get; set; }
+        public StuckedContext Context { get; set; }
         public TransitStatusService TransitStatusService { get; set; }
 
         public HighwayController()
         {
-            this.db = new StuckedContext();
+            this.Context = new StuckedContext();
             this.TransitStatusService = new TransitStatusService();
         }
 
