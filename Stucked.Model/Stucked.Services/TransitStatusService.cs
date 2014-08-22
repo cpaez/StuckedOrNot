@@ -66,10 +66,11 @@ namespace Stucked.Services
                 var statusColor = this.DefaultHighwayColor;
                 var currentStatus = signInformation.Where(n => n.Key.StartsWith(highwaySign.Name));
 
-                var signMessage = string.Empty;
+                var signMessage = "<br \"/>";
                 foreach (var status in currentStatus)
                 {
-                    signMessage += status.Value + ' ';
+                    if (status.Value.Length > 3)
+                        signMessage += status.Value + "<br \"/>";
                 }
                 highwaySignStatus.Status = signMessage;
 
