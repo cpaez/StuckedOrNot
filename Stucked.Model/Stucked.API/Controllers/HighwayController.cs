@@ -14,6 +14,9 @@ namespace Stucked.API.Controllers
     {
         public ITransitStatusService TransitStatusService;
 
+        public HighwayController()
+        { }
+
         public HighwayController(ITransitStatusService transitStatusService)
         {
             this.TransitStatusService = transitStatusService;
