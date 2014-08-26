@@ -22,16 +22,10 @@ namespace Stucked.API.Controllers
             this.TransitStatusService = transitStatusService;
         }
 
-        // GET api/sign
+        // GET api/highway
         public IEnumerable<Highway> Get()
         {
             return this.TransitStatusService.GetTransitStatusForAllHighways();
-        }
-
-        // GET api/sign/5
-        public string Get(int id)
-        {
-            return "value";
         }
     }
 }

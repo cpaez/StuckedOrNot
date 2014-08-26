@@ -13,9 +13,13 @@ namespace Stucked.API
     {
         public static void Register(HttpConfiguration config)
         {
+            // add IoC configuration
             var container = new UnityContainer();
             container.RegisterType<ITransitStatusService, TransitStatusService>(new HierarchicalLifetimeManager());
             config.DependencyResolver = new UnityResolver(container);
+
+            // add custom exception logging filter 
+            config.Filters.Add(new ExceptionHandlingAttribute());
 
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",

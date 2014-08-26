@@ -1,0 +1,19 @@
+2014-08-26 17:11:16,389 [11] DEBUG Stucked.Infrastructure.CustomLogger - Service successfully called.
+2014-08-26 17:23:02,635 [9] INFO  Stucked.Infrastructure.CustomLogger - Service successfully called. 86 results found.
+2014-08-26 17:24:38,275 [6] ERROR Stucked.Infrastructure.CustomLogger - Exception calling GetTransitStatusForAllHighways service method.
+System.ApplicationException: Please show this message in case of error.
+   at Stucked.Services.TransitStatusService.GetTransitStatusForAllHighways() in c:\Users\carlos.paez\Documents\GitHub\StuckedOrNot\Stucked.Model\Stucked.Services\TransitStatusService.cs:line 29
+   at Stucked.API.Controllers.HighwayController.Get() in c:\Users\carlos.paez\Documents\GitHub\StuckedOrNot\Stucked.Model\Stucked.API\Controllers\HighwayController.cs:line 30
+2014-08-26 17:28:33,866 [9] ERROR Stucked.Infrastructure.CustomLogger - Exception calling GetTransitStatusForAllHighways service method.
+System.ApplicationException: Please show this message in case of error.
+   at Stucked.Services.TransitStatusService.GetTransitStatusForAllHighways() in c:\Users\carlos.paez\Documents\GitHub\StuckedOrNot\Stucked.Model\Stucked.Services\TransitStatusService.cs:line 29
+   at Stucked.API.Controllers.HighwayController.Get() in c:\Users\carlos.paez\Documents\GitHub\StuckedOrNot\Stucked.Model\Stucked.API\Controllers\HighwayController.cs:line 30
+2014-08-26 17:59:32,224 [6] ERROR Stucked.Infrastructure.CustomLogger - Error controlling.
+System.ApplicationException: Please show this message in case of error.
+   at Stucked.Services.TransitStatusService.GetTransitStatusForAllHighways() in c:\Users\carlos.paez\Documents\GitHub\StuckedOrNot\Stucked.Model\Stucked.Services\TransitStatusService.cs:line 29
+   at Stucked.API.Controllers.HighwayController.Get() in c:\Users\carlos.paez\Documents\GitHub\StuckedOrNot\Stucked.Model\Stucked.API\Controllers\HighwayController.cs:line 28
+   at lambda_method(Closure , Object , Object[] )
+   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ActionExecutor.<>c__DisplayClass13.<GetExecutor>b__c(Object instance, Object[] methodParameters)
+   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.ActionExecutor.Execute(Object instance, Object[] arguments)
+   at System.Web.Http.Controllers.ReflectedHttpActionDescriptor.<>c__DisplayClass5.<ExecuteAsync>b__4()
+   at System.Threading.Tasks.TaskHelpers.RunSynchronously[TResult](Func`1 func, CancellationToken cancellationToken)

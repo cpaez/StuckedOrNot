@@ -15,6 +15,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stucked.Services", "Stucked
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stucked.Services.Tests", "Stucked.Services.Tests\Stucked.Services.Tests.csproj", "{B55756B6-9E44-4B1D-92BE-CFB560113E7E}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Stucked.Infrastructure", "Stucked.Infrastructure\Stucked.Infrastructure.csproj", "{29598A50-6FDD-4BC3-9AC5-7D5653AF3AB2}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -45,6 +47,10 @@ Global
 		{B55756B6-9E44-4B1D-92BE-CFB560113E7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{B55756B6-9E44-4B1D-92BE-CFB560113E7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{B55756B6-9E44-4B1D-92BE-CFB560113E7E}.Release|Any CPU.Build.0 = Release|Any CPU
+		{29598A50-6FDD-4BC3-9AC5-7D5653AF3AB2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{29598A50-6FDD-4BC3-9AC5-7D5653AF3AB2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{29598A50-6FDD-4BC3-9AC5-7D5653AF3AB2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{29598A50-6FDD-4BC3-9AC5-7D5653AF3AB2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

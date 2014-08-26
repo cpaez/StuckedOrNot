@@ -46,6 +46,9 @@
     <Reference Include="EntityFramework.SqlServer">
       <HintPath>..\packages\EntityFramework.6.1.1\lib\net40\EntityFramework.SqlServer.dll</HintPath>
     </Reference>
+    <Reference Include="log4net">
+      <HintPath>..\packages\log4net.2.0.3\lib\net40-full\log4net.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="Microsoft.Practices.ServiceLocation">
       <HintPath>..\packages\CommonServiceLocator.1.0\lib\NET35\Microsoft.Practices.ServiceLocation.dll</HintPath>
@@ -176,6 +179,7 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
+    <Compile Include="Controllers\BaseController.cs" />
     <Compile Include="Controllers\HighwaySignController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\HighwayController.cs" />
@@ -184,6 +188,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Infrastructure\ExceptionHandlingAttribute.cs" />
     <Compile Include="Infrastructure\UnityResolver.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -257,6 +262,7 @@
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
     <Content Include="autopista.example.json" />
+    <Content Include="log4net.config" />
     <None Include="Properties\PublishProfiles\Stucked Web API - FTP PRD.pubxml" />
     <None Include="Properties\PublishProfiles\Stucked Web API - FTP Testing.pubxml" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
@@ -320,6 +326,10 @@
     <ProjectReference Include="..\Stucked.DataAccess\Stucked.DataAccess.csproj">
       <Project>{594a8052-84cb-46f7-b4b9-37fc9fec9a0c}</Project>
       <Name>Stucked.DataAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\Stucked.Infrastructure\Stucked.Infrastructure.csproj">
+      <Project>{29598a50-6fdd-4bc3-9ac5-7d5653af3ab2}</Project>
+      <Name>Stucked.Infrastructure</Name>
     </ProjectReference>
     <ProjectReference Include="..\Stucked.Model\Stucked.Model.csproj">
       <Project>{18fb2dd7-2a2c-4f8a-b81c-57cd1feb8c32}</Project>
