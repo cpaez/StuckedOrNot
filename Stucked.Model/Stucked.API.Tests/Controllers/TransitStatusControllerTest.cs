@@ -14,7 +14,7 @@ namespace Stucked.API.Tests.Controllers
     [TestClass]
     public class TransitStatusControllerTest
     {
-        [TestMethod]
+        [TestMethod, Ignore]
         public void Get()
         {
             // Arrange
@@ -30,7 +30,7 @@ namespace Stucked.API.Tests.Controllers
             Assert.AreEqual("value2", result.ElementAt(1));
         }
 
-        [TestMethod]
+        [TestMethod, Ignore]
         public void GetById()
         {
             // Arrange

@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web.Http;
+using Microsoft.Practices.Unity;
+using Microsoft.Practices.Unity.Configuration;
+using Stucked.Services;
+using Stucked.API.Infrastructure;
 
 namespace Stucked.API
 {
@@ -9,6 +13,10 @@ namespace Stucked.API
     {
         public static void Register(HttpConfiguration config)
         {
+            var container = new UnityContainer();
+            container.RegisterType<ITransitStatusService, TransitStatusService>(new HierarchicalLifetimeManager());
+            config.DependencyResolver = new UnityResolver(container);
+
             config.Routes.MapHttpRoute(
                 name: "DefaultApi",
                 routeTemplate: "api/{controller}/{id}",

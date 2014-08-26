@@ -9,7 +9,7 @@ using System.IO;
 
 namespace Stucked.Services
 {
-    public class TransitStatusService
+    public class TransitStatusService : ITransitStatusService
     {
         private StuckedContext Context = new StuckedContext();
 

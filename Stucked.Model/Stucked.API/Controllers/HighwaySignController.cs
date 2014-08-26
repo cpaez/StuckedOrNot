@@ -5,20 +5,17 @@ using System.Net;
 using System.Net.Http;
 using System.Web.Http;
 using Stucked.Model;
-using Stucked.DataAccess;
 using Stucked.Services;
 
 namespace Stucked.API.Controllers
 {
     public class HighwaySignController : ApiController
     {
-        public StuckedContext Context { get; set; }
-        public TransitStatusService TransitStatusService { get; set; }
+        public ITransitStatusService TransitStatusService;
 
-        public HighwaySignController()
+        public HighwaySignController(ITransitStatusService transitStatusService)
         {
-            this.Context = new StuckedContext();
-            this.TransitStatusService = new TransitStatusService();
+            this.TransitStatusService = transitStatusService;
         }
 
         // GET api/highwaysign

@@ -12,13 +12,11 @@ namespace Stucked.API.Controllers
 {
     public class HighwayController : ApiController
     {
-        public StuckedContext Context { get; set; }
-        public TransitStatusService TransitStatusService { get; set; }
+        public ITransitStatusService TransitStatusService;
 
-        public HighwayController()
+        public HighwayController(ITransitStatusService transitStatusService)
         {
-            this.Context = new StuckedContext();
-            this.TransitStatusService = new TransitStatusService();
+            this.TransitStatusService = transitStatusService;
         }
 
         // GET api/sign

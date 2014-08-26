@@ -16,11 +16,5 @@ namespace Stucked.DataAccess
 
         public DbSet<Highway> Highways { get; set; }
         public DbSet<HighwaySign> HigwaySigns { get; set; }
-        //public DbSet<HighwaySignInfo> HighwaySignInfos { get; set; }
-
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)
-        {
-            //modelBuilder.Conventions.Remove<PluralizingTableNameConvention>();
-        }
     }
 }

@@ -1,20 +1,25 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.Practices.Unity;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
-using Stucked.Services;
 using Stucked.Model;
+using System.Collections.Generic;
 
 namespace Stucked.Services.Tests
 {
     [TestClass]
-    public class TransitStatusServiceTest
+    public class TransitStatusServiceTest : BaseStuckedTestFixture
     {
+        public ITransitStatusService TransitStatusService;
+
+        [TestInitialize]
+        public void Setup()
+        {   
+            this.TransitStatusService = this.Container.Resolve<ITransitStatusService>();
+        }
+
         [TestMethod]
         public void GetTransitStatusForAllHighwaysTest()
         {
-            var service = new TransitStatusService();
-
-            var result = service.GetTransitStatusForAllHighways();
+            var result = this.TransitStatusService.GetTransitStatusForAllHighways();
 
             Assert.IsNotNull(result);
             Assert.IsInstanceOfType(result, typeof(IEnumerable<Highway>));
@@ -23,9 +28,7 @@ namespace Stucked.Services.Tests
         [TestMethod]
         public void GetTransitStatusForAllHighwaySignsTest()
         {
-            var service = new TransitStatusService();
-
-            var result = service.GetTransitStatusForAllHighwaySigns();
+            var result = this.TransitStatusService.GetTransitStatusForAllHighwaySigns();
 
             Assert.IsNotNull(result);
             Assert.IsInstanceOfType(result, typeof(IEnumerable<HighwaySignStatus>));
