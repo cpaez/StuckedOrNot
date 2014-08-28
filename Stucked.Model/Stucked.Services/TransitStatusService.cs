@@ -18,9 +18,14 @@ namespace Stucked.Services
         private string DefaultSegmentColor = "green";
         private string AusaServiceUrl = ConfigurationManager.AppSettings["AusaServiceUrl"];
 
-        public IEnumerable<Highway> GetTransitStatusForAllHighways()
+        public IEnumerable<Highway> GetHighways()
         {
             return this.Context.Highways;
+        }
+
+        public IEnumerable<Segment> GetTransitStatusForAllHighways(int highwayId)
+        {
+            return this.Context.GetSegmentsByHighway(highwayId);
         }
 
         /// <summary>

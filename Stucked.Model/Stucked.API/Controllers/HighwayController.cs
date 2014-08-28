@@ -20,7 +20,7 @@ namespace Stucked.API.Controllers
         // GET api/highway
         public IEnumerable<Highway> Get()
         {
-            return this.TransitStatusService.GetTransitStatusForAllHighways();
+            return this.TransitStatusService.GetHighways();
         }
     }
 }

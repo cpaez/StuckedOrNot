@@ -10,5 +10,6 @@
         public string NameStart { get; set; }
         public string NameEnd { get; set; }
         public string Detail { get; set; }
+        public int HighwayId { get; set; }
     }
 }
