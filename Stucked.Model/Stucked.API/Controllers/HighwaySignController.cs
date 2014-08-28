@@ -23,11 +23,5 @@ namespace Stucked.API.Controllers
         {
             return this.TransitStatusService.GetTransitStatusForAllHighwaySigns();
         }
-
-        // GET api/highwaysign/5
-        public string Get(int id)
-        {
-            return "value";
-        }
     }
 }
