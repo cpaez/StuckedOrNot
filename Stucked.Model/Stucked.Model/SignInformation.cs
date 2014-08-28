@@ -1,12 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
-using Newtonsoft.Json;
-using Newtonsoft.Json.Converters;
-
-namespace Stucked.Model
+﻿namespace Stucked.Model
 {
     public class SignInformation
     {

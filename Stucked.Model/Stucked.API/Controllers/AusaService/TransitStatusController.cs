@@ -1,12 +1,10 @@
-﻿using System;
+﻿using Stucked.Model;
+using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Web.Http;
-using Stucked.Model;
-using System.IO;
 using System.Configuration;
+using System.IO;
+using System.Net;
+using System.Web.Http;
 
 namespace Stucked.API.Controllers
 {

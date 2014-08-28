@@ -1,6 +1,5 @@
-﻿using System;
+﻿using Stucked.Model;
 using System.Collections.Generic;
-using Stucked.Model;
 
 namespace Stucked.Services
 {
