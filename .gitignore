@@ -203,6 +203,7 @@ develop-eggs/
 
 # Installer logs
 pip-log.txt
+[Ll]ogs/
 
 # Unit test / coverage reports
 .coverage
