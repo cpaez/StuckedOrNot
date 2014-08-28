@@ -13,9 +13,6 @@ namespace Stucked.Model
         public string GeoJson { get; set; }
         public string Direction { get; set; }
         public string Location { get; set; }
-
-        public Segment Segment { get; set; }
-        public int HighwayId { get; set; }
     }
 
     public class HighwaySignStatus
