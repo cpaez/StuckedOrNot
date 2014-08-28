@@ -14,6 +14,7 @@ namespace Stucked.DataAccess
         {
         }
 
+        public DbSet<Highway> Highways { get; set; }
         public DbSet<Segment> Segments { get; set; }
         public DbSet<HighwaySign> HigwaySigns { get; set; }
     }

@@ -19,12 +19,17 @@ namespace Stucked.Services
         private string DefaultSegmentColor = "green";
         private string AusaServiceUrl = ConfigurationManager.AppSettings["AusaServiceUrl"];
 
+        public IEnumerable<Highway> GetTransitStatusForAllHighways()
+        {
+            return this.Context.Highways;
+        }
+
         /// <summary>
         /// Method that returns all the Segments with its current status (Smooth - Slow - Delayed - Stucked)
         /// It retrieves segments found on the DB and then calls the AUSA service to get current status for each one
         /// </summary>
         /// <returns>List of Segments</returns>
-        public IEnumerable<Segment> GetTransitStatusForAllHighways()
+        public IEnumerable<Segment> GetTransitStatusForAllSegments()
         {
             var finalSegmentlist = new List<Segment>();
             var originalSegmentList = this.Context.Segments.ToList();

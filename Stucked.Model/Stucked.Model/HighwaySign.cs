@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
-namespace Stucked.Model
+﻿namespace Stucked.Model
 {
     public class HighwaySign
     {

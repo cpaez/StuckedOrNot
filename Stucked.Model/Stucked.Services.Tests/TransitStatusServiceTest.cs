@@ -17,9 +17,9 @@ namespace Stucked.Services.Tests
         }
 
         [TestMethod]
-        public void GetTransitStatusForAllHighwaysTest()
+        public void GetTransitStatusForAllSegmentsTest()
         {
-            var result = this.TransitStatusService.GetTransitStatusForAllHighways();
+            var result = this.TransitStatusService.GetTransitStatusForAllSegments();
 
             Assert.IsNotNull(result);
             Assert.IsInstanceOfType(result, typeof(IEnumerable<Segment>));

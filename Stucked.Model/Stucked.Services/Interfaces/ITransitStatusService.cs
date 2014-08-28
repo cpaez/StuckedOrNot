@@ -6,7 +6,8 @@ namespace Stucked.Services
 {
     public interface ITransitStatusService
     {
-        IEnumerable<Segment> GetTransitStatusForAllHighways();
+        IEnumerable<Highway> GetTransitStatusForAllHighways();
+        IEnumerable<Segment> GetTransitStatusForAllSegments();
         IEnumerable<HighwaySignStatus> GetTransitStatusForAllHighwaySigns();
     }
 }
