@@ -14,7 +14,7 @@ namespace Stucked.Model
         public string Direction { get; set; }
         public string Location { get; set; }
 
-        public Highway Highway { get; set; }
+        public Segment Segment { get; set; }
         public int HighwayId { get; set; }
     }
 

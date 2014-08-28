@@ -22,7 +22,7 @@ namespace Stucked.API.Tests.Controllers
 
             // assert
             Assert.IsNotNull(result);
-            Assert.IsInstanceOfType(result, typeof(IEnumerable<Highway>));
+            Assert.IsInstanceOfType(result, typeof(IEnumerable<Segment>));
             Assert.IsNotInstanceOfType(result, typeof(IEnumerable<HighwaySign>));
         }
     }

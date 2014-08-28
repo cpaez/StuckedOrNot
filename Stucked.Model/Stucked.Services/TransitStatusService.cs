@@ -16,35 +16,35 @@ namespace Stucked.Services
         private string PointOfMeasureSeed = "V";
         private string SignInformationSeed = "C";
 
-        private string DefaultHighwayColor = "green";
+        private string DefaultSegmentColor = "green";
         private string AusaServiceUrl = ConfigurationManager.AppSettings["AusaServiceUrl"];
 
         /// <summary>
-        /// Method that returns all the Highways with its current status (Smooth - Slow - Delayed - Stucked)
-        /// It retrieves highways found on the DB and then calls the AUSA service to get current status for each one
+        /// Method that returns all the Segments with its current status (Smooth - Slow - Delayed - Stucked)
+        /// It retrieves segments found on the DB and then calls the AUSA service to get current status for each one
         /// </summary>
-        /// <returns>List of Highways</returns>
-        public IEnumerable<Highway> GetTransitStatusForAllHighways()
+        /// <returns>List of Segments</returns>
+        public IEnumerable<Segment> GetTransitStatusForAllHighways()
         {
-            var finalHighwaylist = new List<Highway>();
-            var originalHighwayList = this.Context.Highways.ToList();
+            var finalSegmentlist = new List<Segment>();
+            var originalSegmentList = this.Context.Segments.ToList();
 
             var measurePoints = this.GetTransitCurrentStatus(PointOfMeasureSeed);
 
-            foreach (var highway in originalHighwayList)
+            foreach (var segment in originalSegmentList)
             {
-                var statusColor = this.DefaultHighwayColor;
-                var currentStatus = measurePoints.FirstOrDefault(n => n.Key == highway.Name);
+                var statusColor = this.DefaultSegmentColor;
+                var currentStatus = measurePoints.FirstOrDefault(n => n.Key == segment.Name);
 
                 if (currentStatus != null)
                     statusColor = this.GetColorByStatus(currentStatus.Value);
 
-                highway.GeoJson = highway.GeoJson.Replace("\"color\": \"darkblue\"", "\"color\": \"" + statusColor + "\"");
+                segment.GeoJson = segment.GeoJson.Replace("\"color\": \"darkblue\"", "\"color\": \"" + statusColor + "\"");
 
-                finalHighwaylist.Add(highway);
+                finalSegmentlist.Add(segment);
             }
 
-            return finalHighwaylist;
+            return finalSegmentlist;
         }
 
         /// <summary>
@@ -63,7 +63,7 @@ namespace Stucked.Services
             {
                 var highwaySignStatus = new HighwaySignStatus(highwaySign);
 
-                var statusColor = this.DefaultHighwayColor;
+                var statusColor = this.DefaultSegmentColor;
                 var currentStatus = signInformation.Where(n => n.Key.StartsWith(highwaySign.Name));
 
                 var signMessage = "<br \"/>";

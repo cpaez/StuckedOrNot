@@ -10,14 +10,14 @@ using Stucked.Services;
 
 namespace Stucked.API.Controllers
 {
-    public class HighwayController : ApiController
+    public class SegmentController : ApiController
     {
         public ITransitStatusService TransitStatusService;
 
-        public HighwayController()
+        public SegmentController()
         { }
 
-        public HighwayController(ITransitStatusService transitStatusService)
+        public SegmentController(ITransitStatusService transitStatusService)
         {
             this.TransitStatusService = transitStatusService;
         }

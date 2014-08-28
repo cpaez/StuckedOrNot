@@ -180,6 +180,7 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
     <Compile Include="Controllers\BaseController.cs" />
+    <Compile Include="Controllers\SegmentController.cs" />
     <Compile Include="Controllers\HighwaySignController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\HighwayController.cs" />
@@ -266,6 +267,7 @@
     <None Include="Properties\PublishProfiles\Stucked Web API - FTP PRD.pubxml" />
     <None Include="Properties\PublishProfiles\Stucked Web API - FTP Testing.pubxml" />
     <None Include="Scripts\jquery-1.8.2.intellisense.js" />
+    <Content Include="Map-local-segments.html" />
     <Content Include="Map-local-highways.html" />
     <Content Include="Map-local.html" />
     <Content Include="Map.html" />

@@ -22,7 +22,7 @@ namespace Stucked.Services.Tests
             var result = this.TransitStatusService.GetTransitStatusForAllHighways();
 
             Assert.IsNotNull(result);
-            Assert.IsInstanceOfType(result, typeof(IEnumerable<Highway>));
+            Assert.IsInstanceOfType(result, typeof(IEnumerable<Segment>));
         }
 
         [TestMethod]
