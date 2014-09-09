@@ -1,7 +1,10 @@
 ﻿
 var segments = [];
-var highways = [];
+var highways = [,];
 var mapDataSegments = [];
+var maps = new Array();
+
+var map;
 
 var colorValues = [
     { 'color': 'green', 'status': 'Smooth' },
@@ -12,7 +15,6 @@ var colorValues = [
 
 var defaultZoom = 12;
 var defaultZoomIn = 14;
-var map;
 
 var segmentsEndpointUrl = 'API/Segment';
 var highwaysEndpointUrl = 'API/Highway';
@@ -131,65 +133,76 @@ function loadHighways() {
     $.getJSON(highwaysEndpointUrl, function (data) {
         // loop into each highway
         $.each(data, function (key, value) {
-            highways.push(value);
+            highways.push(value.HighwayId, value);
         });
     });
 }
 
 function renderHighwayinMap(id) {
-    var result = '{"type": "FeatureCollection","features": [';
-    for (var i = 0, len = mapDataSegments.length; i < len; i++) {
-        var item = mapDataSegments[i];
-        if (item.HighwayId === id) {
-            result += item.Value + ',';
-        }
-    }
-    var result2 = result.substring(0, result.length - 1);
-    result2 += ']}';
+    var item = maps.filter(function (map) {
+        return (map.highwayId == id)
+    });
 
-    var parsed = JSON.parse(result2);
-        
-    map.data.addGeoJson(parsed);
+    // if segments of this highway are not added to the collection of maps, I do that 
+    if (item == "") {
+        var result = '{"type": "FeatureCollection","features": [';
+        for (var i = 0, len = mapDataSegments.length; i < len; i++) {
+            var item = mapDataSegments[i];
+            if (item.HighwayId === id) {
+                result += item.Value + ',';
+            }
+        }
+        var result2 = result.substring(0, result.length - 1);
+        result2 += ']}';
+
+        var parsed = JSON.parse(result2);
+
+        // add all the segments from a given Highway to a map collection
+        var features = map.data.addGeoJson(parsed);
+
+        maps.push({ 'highwayId': id, 'map': features });
+    }
+    else
+    {
+        console.log('Already invited to the party bro!');
+    }
 }
 
 $(document).ready(function() {
     $("#btn-au1").click(function() {
-        console.log('Show AU-1 segments only.');
-
         renderHighwayinMap(1);
     });
 
     $("#btn-au6").click(function () {
-        console.log('Show AU-6 segments only');
-
         renderHighwayinMap(2);
     });
 
     $("#btn-aud").click(function () {
-        console.log('Show AU-DELLEPIANE segments only');
-
         renderHighwayinMap(3);
     });
 
     $("#btn-aui").click(function () {
-        console.log('Show AU-ILLIA segments only');
-
         renderHighwayinMap(4);
     });
 
     $("#btn-au9").click(function () {
-        console.log('Show AU-9 JULIO segments only');
-
         renderHighwayinMap(5);
     });
 
     $("#btn-all").click(function () {
-        //map.data.LoadGeoJson(mapDataSegments);
+        renderHighwayinMap(1);
+        renderHighwayinMap(2);
+        renderHighwayinMap(3);
+        renderHighwayinMap(4);
+        renderHighwayinMap(5);
     });
 
     $("#btn-none").click(function () {
-        console.log('Hide all segments.');
+        maps = new Array(); // remove all the maps in the collection
 
-        map.data.setMap(null);
+        // remove all the features in the map
+        map.data.forEach( function(feature) {
+            map.data.remove(feature);
+        });
     });
 });
