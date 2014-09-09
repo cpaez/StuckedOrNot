@@ -156,31 +156,31 @@ $(document).ready(function() {
     $("#btn-au1").click(function() {
         console.log('Show AU-1 segments only.');
 
-        renderHighwayinMap(2);
+        renderHighwayinMap(1);
     });
 
     $("#btn-au6").click(function () {
         console.log('Show AU-6 segments only');
 
-        renderHighwayinMap(1);
+        renderHighwayinMap(2);
     });
 
     $("#btn-aud").click(function () {
         console.log('Show AU-DELLEPIANE segments only');
 
-        renderHighwayinMap(2);
+        renderHighwayinMap(3);
     });
 
     $("#btn-aui").click(function () {
         console.log('Show AU-ILLIA segments only');
 
-        renderHighwayinMap(2);
+        renderHighwayinMap(4);
     });
 
     $("#btn-au9").click(function () {
         console.log('Show AU-9 JULIO segments only');
 
-        renderHighwayinMap(2);
+        renderHighwayinMap(5);
     });
 
     $("#btn-all").click(function () {
