@@ -3,6 +3,9 @@ var segments = [];
 var highways = [, ];
 var signs = [];
 
+var stuckedSegments = [];
+var delayedSegments = [];
+
 var areSignsVisible = false;
 var pins = [];
 
@@ -56,17 +59,26 @@ function initializeHighwaysMap() {
 
         // loop into each segment
         $.each(data, function (key, value) {
-            var json = JSON.parse(value.GeoJson);
+            var item = value.Segment;
+
+            var json = JSON.parse(item.GeoJson);
 
             var mapData = [];
-            mapData.HighwayId = value.HighwayId;
+            mapData.HighwayId = item.HighwayId;
             mapData.Key = key;
-            mapData.Value = value.GeoJson;
+            mapData.Value = item.GeoJson;
 
             mapDataSegments.push(mapData);
 
+            // select stucked and delayed segments
+            if (value.Status == 'Stucked')
+                stuckedSegments.push(item);
+
+            if (value.Status == 'Delayed')
+                delayedSegments.push(item);
+
             //map.data.addGeoJson(json, value.Name);
-            segments.push(value);
+            segments.push(item);
         });
 
         // pre-set the infoWindow
@@ -128,6 +140,8 @@ function initializeHighwaysMap() {
             // open the infoWindow (current transit status)
             infoWindow.open(map, anchor);
         });
+
+        showDetailedInfo();
 
         hideLoading();
     });
@@ -294,4 +308,17 @@ function hideSigns() {
 
 function changeSignsButtonText(text) {
     $("#btn-show-signs").text(text);
+}
+
+function showDetailedInfo() {
+    changeStuckedMessage("There are " + stuckedSegments.length + " stucked segments.");
+    changeDelayedMessage("There are " + delayedSegments.length + " delayed segments.");
+}
+
+function changeDelayedMessage(text) {
+    $("#msg-delayed").text(text);
+}
+
+function changeStuckedMessage(text) {
+    $("#msg-stucked").text(text);
 }

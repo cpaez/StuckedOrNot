@@ -33,9 +33,9 @@ namespace Stucked.Services
         /// It retrieves segments found on the DB and then calls the AUSA service to get current status for each one
         /// </summary>
         /// <returns>List of Segments</returns>
-        public IEnumerable<Segment> GetTransitStatusForAllSegments()
+        public IEnumerable<SegmentStatus> GetTransitStatusForAllSegments()
         {
-            var finalSegmentlist = new List<Segment>();
+            var finalSegmentlist = new List<SegmentStatus>();
             var originalSegmentList = this.Context.Segments.ToList();
 
             var measurePoints = this.GetTransitCurrentStatus(PointOfMeasureSeed);
@@ -50,7 +50,11 @@ namespace Stucked.Services
 
                 segment.GeoJson = segment.GeoJson.Replace("\"color\": \"darkblue\"", "\"color\": \"" + statusColor + "\"");
 
-                finalSegmentlist.Add(segment);
+                var segmentStatus = new SegmentStatus(segment);
+                var statusColorCode = (currentStatus != null) ? currentStatus.Value : "FFFFFF";
+                segmentStatus.Status = this.GetStatusByColor(statusColorCode);
+
+                finalSegmentlist.Add(segmentStatus);
             }
 
             return finalSegmentlist;
@@ -120,6 +124,37 @@ namespace Stucked.Services
             }
 
             return color;
+        }
+
+        protected string GetStatusByColor(string color)
+        {
+            var smoothTransit = ConfigurationManager.AppSettings["Smooth"];
+            var slowTransit = ConfigurationManager.AppSettings["Slow"];
+            var delayedTransit = ConfigurationManager.AppSettings["Delayed"];
+            var stuckedTransit = ConfigurationManager.AppSettings["Stucked"];
+
+            var status = smoothTransit;
+
+            switch (color)
+            {
+                case "FFFFFF":
+                    status = smoothTransit;
+                    break;
+                case "008000":
+                    status = slowTransit;
+                    break;
+                case "FFFF00":
+                    status = delayedTransit;
+                    break;
+                case "FF0000":
+                    status = stuckedTransit;
+                    break;
+                default:
+                    status = smoothTransit;
+                    break;
+            }
+
+            return status;
         }
 
         protected IEnumerable<TransitStatus> GetTransitCurrentStatus(string seed)

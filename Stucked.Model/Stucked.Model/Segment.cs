@@ -12,4 +12,15 @@
         public string Detail { get; set; }
         public int HighwayId { get; set; }
     }
+
+    public class SegmentStatus
+    {
+        public SegmentStatus(Segment segment)
+        {
+            this.Segment = segment;
+        }
+
+        public Segment Segment { get; set; }
+        public string Status { get; set; }
+    }
 }

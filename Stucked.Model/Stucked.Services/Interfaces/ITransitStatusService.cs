@@ -7,7 +7,7 @@ namespace Stucked.Services
     {
         IEnumerable<Highway> GetHighways();
         IEnumerable<Segment> GetTransitStatusForAllHighways(int highwayId);
-        IEnumerable<Segment> GetTransitStatusForAllSegments();
+        IEnumerable<SegmentStatus> GetTransitStatusForAllSegments();
         IEnumerable<HighwaySignStatus> GetTransitStatusForAllHighwaySigns();
     }
 }

@@ -18,7 +18,7 @@ namespace Stucked.API.Controllers
         }
 
         // GET api/segment
-        public IEnumerable<Segment> Get()
+        public IEnumerable<SegmentStatus> Get()
         {
             return this.TransitStatusService.GetTransitStatusForAllSegments();
         }
