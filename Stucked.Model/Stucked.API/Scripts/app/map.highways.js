@@ -204,9 +204,9 @@ $(document).ready(function() {
     });
 
     $("#btn-none").click(function () {
-        maps = new Array(); // remove all the maps in the collection
+        maps = new Array(); // remove all the maps (of highways) in the collection
 
-        // remove all the features in the map
+        // remove all the features in the whole map
         map.data.forEach( function(feature) {
             map.data.remove(feature);
         });
@@ -215,12 +215,14 @@ $(document).ready(function() {
     $("#btn-show-signs").click(function () {
         if (areSignsVisible == false) {
             loadSigns();
-            $("#btn-show-signs").text('Hide signs');
+
+            changeSignsButtonText('Hide signs');
             areSignsVisible = true;
         }
         else {
             hideSigns();
-            $("#btn-show-signs").text('Show signs');
+
+            changeSignsButtonText('Show signs');
             areSignsVisible = false;
         }
     });
@@ -287,4 +289,9 @@ function hideSigns() {
         pins[i].setMap(null);
     }
     pins = [];
+}
+
+
+function changeSignsButtonText(text) {
+    $("#btn-show-signs").text(text);
 }
