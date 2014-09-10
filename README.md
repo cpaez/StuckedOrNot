@@ -1,6 +1,6 @@
 StuckedOrNot
 ============
 
-Service to get AUSA information about highways in Buenos Aires and its surroundings.
+This project aims to **collect and show information about Buenos Aires highways**. Based on the public information shared by **AUSA** through the government's public data project.
 
-More information here: http://data.buenosaires.gob.ar/dataset/estado-autopista.
+More info here: http://data.buenosaires.gob.ar.
