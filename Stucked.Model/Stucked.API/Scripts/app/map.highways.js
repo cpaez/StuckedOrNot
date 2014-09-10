@@ -1,6 +1,11 @@
 ﻿
 var segments = [];
-var highways = [,];
+var highways = [, ];
+var signs = [];
+
+var areSignsVisible = false;
+var pins = [];
+
 var mapDataSegments = [];
 var maps = new Array();
 
@@ -18,6 +23,7 @@ var defaultZoomIn = 14;
 
 var segmentsEndpointUrl = 'API/Segment';
 var highwaysEndpointUrl = 'API/Highway';
+var signsEndopintUrl    = "API/HighwaySign";
 
 
 function createBAMap() {
@@ -205,4 +211,80 @@ $(document).ready(function() {
             map.data.remove(feature);
         });
     });
+
+    $("#btn-show-signs").click(function () {
+        if (areSignsVisible == false) {
+            loadSigns();
+            $("#btn-show-signs").text('Hide signs');
+            areSignsVisible = true;
+        }
+        else {
+            hideSigns();
+            $("#btn-show-signs").text('Show signs');
+            areSignsVisible = false;
+        }
+    });
 });
+
+function loadSigns() {
+
+    this.showLoading();
+
+    $.getJSON(signsEndopintUrl, function (data) {
+        var buenosAires = new google.maps.LatLng(-34.61530, -58.51550);
+        
+        // pre-set the infoWindow
+        var infoWindow = new google.maps.InfoWindow(
+            {
+                content: '',
+                size: new google.maps.Size(10, 30)
+            });
+
+        // loop into each sign
+        $.each(data, function (key, value) {
+
+            var json = JSON.parse(value.HighwaySign.GeoJson);
+
+            var lat = json.coordinates[1];
+            var long = json.coordinates[0];
+            var currentLatlng = new google.maps.LatLng(lat, long);
+
+            // create a marker for the current sign
+            var marker = new google.maps.Marker({
+                position: currentLatlng,
+                map: map,
+                title: value.HighwaySign.Name
+            });
+
+            pins.push(marker);
+
+            // add onlick handle to generate and show the infoWindow (current sign status)
+            google.maps.event.addListener(marker, 'click', function (event) {
+
+                var description = value.HighwaySign.Description + ' Sentido: ' + value.HighwaySign.Direction + ' (' + value.HighwaySign.Location + ')';
+
+                infoWindow.setContent('<div id="dialog-box-title">Current Sign Status</div><div style="line-height:1.35;overflow:hidden;white-space:nowrap;">' +
+                                           description + '<br/><strong>Status:</strong> <span style="background-color: white">&nbsp' + value.Status + '&nbsp</span></div>');
+
+                // zoom in & center the map
+                var newZoom = map.getZoom() <= defaultZoom ? defaultZoomIn : map.getZoom();
+                map.setZoom(newZoom);
+                map.panTo(event.latLng);
+
+                // open the infoWindow (current sign status)
+                infoWindow.open(map, marker);
+            });
+
+            signs.push(value);
+        });
+
+        hideLoading();
+    });
+}
+
+function hideSigns() {
+    for (var i = 0; i < pins.length; i++) {
+        pins[i].setMap(null);
+    }
+    pins = [];
+}
