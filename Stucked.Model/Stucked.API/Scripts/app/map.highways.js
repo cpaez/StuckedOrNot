@@ -309,19 +309,19 @@ function hideSigns() {
 function showDetailedInfo() {
     // stucked segments
     if (stuckedSegments.length > 0)
-        changeStuckedMessage("There are " + stuckedSegments.length + " stucked segments.");
+        changeStuckedMessage("- There are " + stuckedSegments.length + " stucked segments.");
     else
-        changeStuckedMessage("There are no stucked segments.");
+        changeStuckedMessage("- There are no stucked segments.");
 
     // delayed segments
     if (delayedSegments.length > 0)
-        changeDelayedMessage("There are " + delayedSegments.length + " delayed segments.");
+        changeDelayedMessage("- There are " + delayedSegments.length + " delayed segments.");
     else
-        changeDelayedMessage("There are no delayed segments.");
+        changeDelayedMessage("- There are no delayed segments.");
 
     // most stucked highway
     if (stuckedSegments.length == 0 && delayedSegments.length == 0) {
-        changeMostStuckedMessage("Huray! No highways stucked nor delayed. It seems you'll have a nice trip.");
+        changeMostStuckedMessage("- Huray! No highways stucked nor delayed. It seems you'll have a nice trip.");
     }
     else {
         var stuckedId = 1;
@@ -350,7 +350,7 @@ function showDetailedInfo() {
         });
 
         var mostStuckedMessage = "(" + stuckedHighway[0].Highway.Code + ") " + stuckedHighway[0].Highway.Name;
-        changeMostStuckedMessage("The most stucked highway is: " + mostStuckedMessage + ". Please avoid to use it. If you still have to go through it, take your precautions.");
+        changeMostStuckedMessage("- The most stucked highway is: " + mostStuckedMessage + ". Please avoid to use it. If you still have to go through it, take your precautions.");
     }
 }
 
