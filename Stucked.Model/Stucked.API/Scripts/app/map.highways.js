@@ -308,19 +308,28 @@ function hideSigns() {
 
 function showDetailedInfo() {
     // stucked segments
-    if (stuckedSegments.length > 0)
+    if (stuckedSegments.length > 0) {
+        $("#btn-show-stucked").hide(); // change to show when the functionallity of displaying independent segments is implemented
         changeStuckedMessage("- There are " + stuckedSegments.length + " stucked segments.");
-    else
+    }
+    else {
+        $("#btn-show-stucked").hide();
         changeStuckedMessage("- There are no stucked segments.");
+    }
 
     // delayed segments
-    if (delayedSegments.length > 0)
+    if (delayedSegments.length > 0) {
+        $("#btn-show-delayed").hide(); // change to show when the functionallity of displaying independent segments is implemented
         changeDelayedMessage("- There are " + delayedSegments.length + " delayed segments.");
-    else
+    }
+    else {
+        $("#btn-show-delayed").hide();
         changeDelayedMessage("- There are no delayed segments.");
+    }
 
     // most stucked highway
     if (stuckedSegments.length == 0 && delayedSegments.length == 0) {
+        $("#btn-most-stucked").hide();
         changeMostStuckedMessage("- Huray! No highways stucked nor delayed. It seems you'll have a nice trip.");
     }
     else {
@@ -328,8 +337,6 @@ function showDetailedInfo() {
 
         var modeStucked = mode(stuckedSegments);
         var modeDelayed = mode(delayedSegments);
-
-        console.log(modeDelayed);
 
         if (stuckedSegments.length == 0) {
             stuckedId = modeDelayed.highwayId;
@@ -347,6 +354,11 @@ function showDetailedInfo() {
         // get the name
         var stuckedHighway = highways.filter(function (highway) {
             return (highway.Id == stuckedId)
+        });
+
+        $("#btn-most-stucked").show();
+        $("#btn-most-stucked").click(function () {
+            renderHighwayinMap(stuckedId);
         });
 
         var mostStuckedMessage = "(" + stuckedHighway[0].Highway.Code + ") " + stuckedHighway[0].Highway.Name;
