@@ -10,8 +10,19 @@
     <div id="map-canvas"></div>
     <div id="selection-container">
         <section class="content-wrapper main-content clear-fix">
-            <h5>Highway</h5>
+            <h4>Detailed Information</h4>
+            <p>
+                We analized traffic information for you. Below you can find more ways to anticipate bad traffic conditions, by having key valuable info
+                about every highway in the city. <br />
+                Please select your highway of interest, also enjoy the possibility to add signs information and some high level aspects about the whole traffic system.
+            </p>
             <ol class="round">
+                <li>
+                    <h5>Select Highways</h5>
+                    <p>
+                        Please select highways to see them right on the map.
+                    </p>
+                </li>
                 <li id="buttons">
                     <button id="btn-au1">AU-1</button>
                     <button id="btn-au6">AU-6</button>
@@ -22,16 +33,21 @@
                     <button id="btn-none">None</button>
                 </li>
                 <li>
+                    <h5>Signs</h5>
+                    <p>
+                        Please click below wether you want to see highway signs right into the map or not.
+                    </p>
+                </li>
+                <li>
                     <a href="#" id="btn-show-signs">Show signs</a>
                 </li>
-                <li id="msg-stucked">
-                    There are 5 segments stucked. <a href="#" id="btn-show-stucked">show</a>
-                </li>
-                <li id="msg-delayed">
-                    There are 5 segments delayed. <a href="#" id="btn-show-delayed">show</a>
-                </li>
-                <li id="msg-most-stucked">
-                    The most stucked highway is: AU-1. <a href="#" id="btn-show-stucked">show</a>
+                <li>
+                    <h5>High Level</h5>
+                    <p>
+                        <span id="msg-stucked">Calculating stucked segments...</span> <a href="#" id="btn-show-stucked">show</a><br />
+                        <span id="msg-delayed">Calculating delayed segments...</span> <a href="#" id="btn-show-delayed">show</a><br />
+                        <span id="msg-most-stucked">Calculating most stucked highway...</span> <a href="#" id="btn-show-stucked">show</a><br />
+                    </p>
                 </li>
             </ol>
         </section>

@@ -1,10 +1,10 @@
 ﻿
 var segments = [];
-var highways = [, ];
+var highways = new Array();
 var signs = [];
 
-var stuckedSegments = [];
-var delayedSegments = [];
+var stuckedSegments = new Array();
+var delayedSegments = new Array();
 
 var areSignsVisible = false;
 var pins = [];
@@ -72,10 +72,10 @@ function initializeHighwaysMap() {
 
             // select stucked and delayed segments
             if (value.Status == 'Stucked')
-                stuckedSegments.push(item);
+                stuckedSegments.push({ 'highwayId': item.HighwayId, 'Segment': item });
 
             if (value.Status == 'Delayed')
-                delayedSegments.push(item);
+                delayedSegments.push({ 'highwayId': item.HighwayId, 'Segment': item });
 
             //map.data.addGeoJson(json, value.Name);
             segments.push(item);
@@ -141,6 +141,7 @@ function initializeHighwaysMap() {
             infoWindow.open(map, anchor);
         });
 
+        // Show info in Detailed Info
         showDetailedInfo();
 
         hideLoading();
@@ -153,7 +154,7 @@ function loadHighways() {
     $.getJSON(highwaysEndpointUrl, function (data) {
         // loop into each highway
         $.each(data, function (key, value) {
-            highways.push(value.HighwayId, value);
+            highways.push({ 'Id': value.HighwayId, 'Highway': value });
         });
     });
 }
@@ -305,14 +306,56 @@ function hideSigns() {
     pins = [];
 }
 
+function showDetailedInfo() {
+    // stucked segments
+    if (stuckedSegments.length > 0)
+        changeStuckedMessage("There are " + stuckedSegments.length + " stucked segments.");
+    else
+        changeStuckedMessage("There are no stucked segments.");
+
+    // delayed segments
+    if (delayedSegments.length > 0)
+        changeDelayedMessage("There are " + delayedSegments.length + " delayed segments.");
+    else
+        changeDelayedMessage("There are no delayed segments.");
+
+    // most stucked highway
+    if (stuckedSegments.length == 0 && delayedSegments.length == 0) {
+        changeMostStuckedMessage("Huray! No highways stucked nor delayed. It seems you'll have a nice trip.");
+    }
+    else {
+        var stuckedId = 1;
+
+        var modeStucked = mode(stuckedSegments);
+        var modeDelayed = mode(delayedSegments);
+
+        console.log(modeDelayed);
+
+        if (stuckedSegments.length == 0) {
+            stuckedId = modeDelayed.highwayId;
+        }
+        else if (delayedSegments.length == 0) {
+            stuckedId = modeStucked.highwayId;
+        }
+        else if (stuckedSegments.length > delayedSegments.length) {
+            stuckedId = modeStucked.highwayId;
+        }
+        else {
+            stuckedId = modeStucked.highwayId;
+        }
+        
+        // get the name
+        var stuckedHighway = highways.filter(function (highway) {
+            return (highway.Id == stuckedId)
+        });
+
+        var mostStuckedMessage = "(" + stuckedHighway[0].Highway.Code + ") " + stuckedHighway[0].Highway.Name;
+        changeMostStuckedMessage("The most stucked highway is: " + mostStuckedMessage + ". Please avoid to use it. If you still have to go through it, take your precautions.");
+    }
+}
 
 function changeSignsButtonText(text) {
     $("#btn-show-signs").text(text);
-}
-
-function showDetailedInfo() {
-    changeStuckedMessage("There are " + stuckedSegments.length + " stucked segments.");
-    changeDelayedMessage("There are " + delayedSegments.length + " delayed segments.");
 }
 
 function changeDelayedMessage(text) {
@@ -321,4 +364,28 @@ function changeDelayedMessage(text) {
 
 function changeStuckedMessage(text) {
     $("#msg-stucked").text(text);
+}
+
+function changeMostStuckedMessage(text) {
+    $("#msg-most-stucked").text(text);
+}
+
+
+function mode(array) {
+    if (array.length == 0)
+        return null;
+    var modeMap = {};
+    var maxEl = array[0], maxCount = 1;
+    for (var i = 0; i < array.length; i++) {
+        var el = array[i];
+        if (modeMap[el] == null)
+            modeMap[el] = 1;
+        else
+            modeMap[el]++;
+        if (modeMap[el] > maxCount) {
+            maxEl = el;
+            maxCount = modeMap[el];
+        }
+    }
+    return maxEl;
 }
