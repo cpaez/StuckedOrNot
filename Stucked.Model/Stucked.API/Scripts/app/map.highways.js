@@ -308,29 +308,45 @@ function hideSigns() {
 
 function showDetailedInfo() {
     // stucked segments
+    this.setStuckedMessage();
+
+    // delayed segments
+    this.setDelayedMessage();
+
+    // most stucked highway
+    this.setMostStuckedMessage();
+}
+
+function changeSignsButtonText(text) {
+    $("#btn-show-signs").text(text);
+}
+
+function setStuckedMessage() {
     if (stuckedSegments.length > 0) {
         $("#btn-show-stucked").hide(); // change to show when the functionallity of displaying independent segments is implemented
-        changeStuckedMessage("- There are " + stuckedSegments.length + " stucked segments.");
+        $("#msg-stucked").text("- There are " + stuckedSegments.length + " stucked segments.");
     }
     else {
         $("#btn-show-stucked").hide();
-        changeStuckedMessage("- There are no stucked segments.");
+        $("#msg-stucked").text("- There are no stucked segments.");
     }
+}
 
-    // delayed segments
+function setDelayedMessage() {
     if (delayedSegments.length > 0) {
         $("#btn-show-delayed").hide(); // change to show when the functionallity of displaying independent segments is implemented
-        changeDelayedMessage("- There are " + delayedSegments.length + " delayed segments.");
+        $("#msg-delayed").text("- There are " + delayedSegments.length + " delayed segments.");
     }
     else {
         $("#btn-show-delayed").hide();
-        changeDelayedMessage("- There are no delayed segments.");
+        $("#msg-delayed").text("- There are no delayed segments.");
     }
+}
 
-    // most stucked highway
+function setMostStuckedMessage() {
     if (stuckedSegments.length == 0 && delayedSegments.length == 0) {
         $("#btn-most-stucked").hide();
-        changeMostStuckedMessage("- Huray! No highways stucked nor delayed. It seems you'll have a nice trip.");
+        $("#msg-most-stucked").text("- Huray! No highways stucked nor delayed. It seems you'll have a nice trip.");
     }
     else {
         var stuckedId = 1;
@@ -350,7 +366,7 @@ function showDetailedInfo() {
         else {
             stuckedId = modeStucked.highwayId;
         }
-        
+
         // get the name
         var stuckedHighway = highways.filter(function (highway) {
             return (highway.Id == stuckedId)
@@ -362,24 +378,8 @@ function showDetailedInfo() {
         });
 
         var mostStuckedMessage = "(" + stuckedHighway[0].Highway.Code + ") " + stuckedHighway[0].Highway.Name;
-        changeMostStuckedMessage("- The most stucked highway is: " + mostStuckedMessage + ". Please avoid to use it. If you still have to go through it, take your precautions.");
+        $("#msg-most-stucked").text("- The most stucked highway is: " + mostStuckedMessage + ". Please avoid to use it. If you still have to go through it, take your precautions.");
     }
-}
-
-function changeSignsButtonText(text) {
-    $("#btn-show-signs").text(text);
-}
-
-function changeDelayedMessage(text) {
-    $("#msg-delayed").text(text);
-}
-
-function changeStuckedMessage(text) {
-    $("#msg-stucked").text(text);
-}
-
-function changeMostStuckedMessage(text) {
-    $("#msg-most-stucked").text(text);
 }
 
 
