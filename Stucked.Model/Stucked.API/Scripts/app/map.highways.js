@@ -141,6 +141,9 @@ function initializeHighwaysMap() {
             infoWindow.open(map, anchor);
         });
 
+        // Show highway buttons
+        // showHighwayButtons();
+
         // Show info in Detailed Info
         showDetailedInfo();
 
@@ -156,6 +159,8 @@ function loadHighways() {
         $.each(data, function (key, value) {
             highways.push({ 'Id': value.HighwayId, 'Highway': value });
         });
+
+        showHighwayButtons();
     });
 }
 
@@ -190,32 +195,11 @@ function renderHighwayinMap(id) {
 }
 
 $(document).ready(function() {
-    $("#btn-au1").click(function() {
-        renderHighwayinMap(1);
-    });
-
-    $("#btn-au6").click(function () {
-        renderHighwayinMap(2);
-    });
-
-    $("#btn-aud").click(function () {
-        renderHighwayinMap(3);
-    });
-
-    $("#btn-aui").click(function () {
-        renderHighwayinMap(4);
-    });
-
-    $("#btn-au9").click(function () {
-        renderHighwayinMap(5);
-    });
-
     $("#btn-all").click(function () {
-        renderHighwayinMap(1);
-        renderHighwayinMap(2);
-        renderHighwayinMap(3);
-        renderHighwayinMap(4);
-        renderHighwayinMap(5);
+        for (var i = 0; i < highways.length; i++) {
+            var highway = highways[i].Highway;
+            renderHighwayinMap(highway.HighwayId);
+        }
     });
 
     $("#btn-none").click(function () {
@@ -304,6 +288,24 @@ function hideSigns() {
         pins[i].setMap(null);
     }
     pins = [];
+}
+
+function showHighwayButtons() {
+    for (var i = 0; i < highways.length; i++) {
+        var highway = highways[i].Highway;
+        var buttonId = "btn-au" + highway.HighwayId;
+        
+        // create and add highways buttons
+        var button = $("<input/>", { type: "button", id: buttonId, value: highway.Code });
+        button.click(getEventHandlerFunction(highway.HighwayId));
+        $('#buttons').append(button);
+    }
+}
+
+function getEventHandlerFunction(id) {
+    return function () {
+        renderHighwayinMap(id);
+    };
 }
 
 function showDetailedInfo() {
