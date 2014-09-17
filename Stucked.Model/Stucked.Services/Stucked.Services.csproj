@@ -40,6 +40,7 @@
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Runtime.Caching" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -47,6 +48,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AusaServiceFacade.cs" />
+    <Compile Include="Interfaces\IAusaServiceFacade.cs" />
     <Compile Include="Interfaces\ITransitStatusService.cs" />
     <Compile Include="TransitStatusService.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

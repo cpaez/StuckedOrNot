@@ -16,7 +16,13 @@ namespace Stucked.Services
         private string SignInformationSeed = "C";
 
         private string DefaultSegmentColor = "green";
-        private string AusaServiceUrl = ConfigurationManager.AppSettings["AusaServiceUrl"];
+
+        public IAusaServiceFacade AusaServiceFacade { get; set; }
+
+        public TransitStatusService()
+        {
+            this.AusaServiceFacade = new AusaServiceFacade();
+        }
 
         public IEnumerable<Highway> GetHighways()
         {
@@ -38,7 +44,7 @@ namespace Stucked.Services
             var finalSegmentlist = new List<SegmentStatus>();
             var originalSegmentList = this.Context.Segments.ToList();
 
-            var measurePoints = this.GetTransitCurrentStatus(PointOfMeasureSeed);
+            var measurePoints = this.AusaServiceFacade.GetAusaTransitCurrentStatus(PointOfMeasureSeed);
 
             foreach (var segment in originalSegmentList)
             {
@@ -70,7 +76,7 @@ namespace Stucked.Services
             var finalHighwaySignlist = new List<HighwaySignStatus>();
             var originalHighwaySignList = this.Context.HigwaySigns.ToList();
 
-            var signInformation = this.GetTransitCurrentStatus(SignInformationSeed);
+            var signInformation = this.AusaServiceFacade.GetAusaTransitCurrentStatus(SignInformationSeed);
 
             foreach (var highwaySign in originalHighwaySignList)
             {
@@ -156,53 +162,7 @@ namespace Stucked.Services
 
             return status;
         }
-
-        protected IEnumerable<TransitStatus> GetTransitCurrentStatus(string seed)
-        {
-            var remoteFile = string.Empty;
-            var webRequest = WebRequest.Create(@AusaServiceUrl);
-
-            using (var response = webRequest.GetResponse())
-            using (var content = response.GetResponseStream())
-            using (var reader = new StreamReader(content))
-            {
-                remoteFile = reader.ReadToEnd();
-            }
-
-            char[] delimiterChars = { '&' };
-            string[] rawStatusList = remoteFile.Split(delimiterChars);
-
-            char[] delimiterChars2 = { '=' };
-            var statusList = new List<TransitStatus>();
-
-            for (int i = 0; i < rawStatusList.Length - 1; i++)
-            {
-                string[] kv = rawStatusList[i].Split(delimiterChars2);
-
-                var item = this.GetStatusItem(kv, seed);
-
-                if (item != null)
-                    statusList.Add(item);
-            }
-
-            return statusList;
-        }
-
-        protected TransitStatus GetStatusItem(string[] kv, string seed)
-        {
-            TransitStatus statusItem = null;
-
-            if (kv.Length == 2)
-            {
-                if (kv[0].StartsWith(seed))
-                {
-                    statusItem = new TransitStatus(kv[0], kv[1]);   
-                }
-            }
-
-            return statusItem;
-        }
-
+        
         #endregion Protected Members
     }
 }
