@@ -11,8 +11,27 @@ namespace Stucked.Services
 {
     public class AusaServiceFacade : IAusaServiceFacade
     {
+        private int DefaultUsaStatusInterval = 5;
         private string AusaServiceUrl = ConfigurationManager.AppSettings["AusaServiceUrl"];
         private MemoryCache cache = MemoryCache.Default;
+
+        private int ausaStatusInterval;
+        public int AusaStatusInterval
+        {
+            get 
+            {
+                try
+                {
+                    this.ausaStatusInterval = int.Parse(ConfigurationManager.AppSettings["AusaStatusInterval"]);
+                }
+                catch (Exception)
+                {
+                    this.ausaStatusInterval = DefaultUsaStatusInterval;
+                }
+                return ausaStatusInterval; 
+            }
+        }
+        
 
         public IEnumerable<TransitStatus> GetAusaTransitCurrentStatus(string seed)
         {
@@ -23,7 +42,7 @@ namespace Stucked.Services
             {
                 // Call the web service
                 webServiceResult = this.GetRealAusaTransitCurrentStatus(seed);
-                cache.Add("AusaCachedStatus", webServiceResult, DateTime.Now.AddMinutes(5));
+                cache.Add("AusaCachedStatus", webServiceResult, DateTime.Now.AddMinutes(this.AusaStatusInterval));
             }
             else
             {
