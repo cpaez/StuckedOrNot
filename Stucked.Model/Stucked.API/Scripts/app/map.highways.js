@@ -190,7 +190,12 @@ function renderHighwayinMap(id) {
     }
 }
 
-$(document).ready(function() {
+$(document).ready(function () {
+
+    $("#set-initial").click(function () {
+        setMapInitialPositionAndZoom();
+    });
+
     $("#btn-all").click(function () {
         for (var i = 0; i < highways.length; i++) {
             var highway = highways[i].Highway;
@@ -379,6 +384,12 @@ function setMostStuckedMessage() {
         var mostStuckedMessage = "(" + stuckedHighway[0].Highway.Code + ") " + stuckedHighway[0].Highway.Name;
         $("#msg-most-stucked").text("- The most stucked highway is: " + mostStuckedMessage + ". Please avoid to use it. If you still have to go through it, take your precautions.");
     }
+}
+
+function setMapInitialPositionAndZoom()
+{
+    map.setZoom(defaultZoom);
+    map.setCenter(new google.maps.LatLng(-34.619980, -58.4450));
 }
 
 function blockElement(element)
