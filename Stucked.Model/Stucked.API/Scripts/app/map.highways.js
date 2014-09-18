@@ -42,8 +42,6 @@ function createBAMap() {
 
 function initializeHighwaysMap() {
 
-    this.showLoading();
-
     this.createBAMap();
     this.loadHighways();
 
@@ -146,8 +144,6 @@ function initializeHighwaysMap() {
 
         // Show info in Detailed Info
         showDetailedInfo();
-
-        hideLoading();
     });
 }
 
@@ -212,6 +208,7 @@ $(document).ready(function() {
     });
 
     $("#btn-show-signs").click(function () {
+
         if (areSignsVisible == false) {
             loadSigns();
 
@@ -229,7 +226,7 @@ $(document).ready(function() {
 
 function loadSigns() {
 
-    this.showLoading();
+    $.blockUI({ message: '<h3><img src="Images/busy.gif" /> Loading...</h3><br />' });
 
     $.getJSON(signsEndopintUrl, function (data) {
         var buenosAires = new google.maps.LatLng(-34.61530, -58.51550);
@@ -279,7 +276,7 @@ function loadSigns() {
             signs.push(value);
         });
 
-        hideLoading();
+        $.unblockUI;
     });
 }
 
@@ -382,6 +379,18 @@ function setMostStuckedMessage() {
         var mostStuckedMessage = "(" + stuckedHighway[0].Highway.Code + ") " + stuckedHighway[0].Highway.Name;
         $("#msg-most-stucked").text("- The most stucked highway is: " + mostStuckedMessage + ". Please avoid to use it. If you still have to go through it, take your precautions.");
     }
+}
+
+function blockElement(element)
+{
+    console.log(element);
+    $(element).block({
+        message: '<h5><img src="Images/busy.gif" /> Loading...</h5>'
+    });
+}
+
+function unblockElement(element) {
+    $(element).unblock();
 }
 
 

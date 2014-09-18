@@ -264,6 +264,7 @@
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
     <Content Include="autopista.example.json" />
+    <Content Include="Images\busy.gif" />
     <Content Include="log4net.config" />
     <None Include="Properties\PublishProfiles\Stucked Web API - FTP PRD.pubxml" />
     <None Include="Properties\PublishProfiles\Stucked Web API - FTP Testing.pubxml" />
@@ -279,6 +280,7 @@
     <None Include="Scripts\jquery.validate-vsdoc.js" />
     <Content Include="Scripts\jquery-ui-1.8.24.js" />
     <Content Include="Scripts\jquery-ui-1.8.24.min.js" />
+    <Content Include="Scripts\jquery.blockUI.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.js" />
     <Content Include="Scripts\jquery.unobtrusive-ajax.min.js" />
     <Content Include="Scripts\jquery.validate.js" />
