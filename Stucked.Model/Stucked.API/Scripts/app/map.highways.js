@@ -13,6 +13,7 @@ var mapDataSegments = [];
 var maps = new Array();
 
 var map;
+var infoWindow;
 
 var colorValues = [
     { 'color': 'green', 'status': 'Smooth' },
@@ -29,7 +30,7 @@ var highwaysEndpointUrl = 'API/Highway';
 var signsEndopintUrl    = "API/HighwaySign";
 
 
-function createBAMap() {
+function createMap() {
     var buenosAires = new google.maps.LatLng(-34.619980, -58.4450);
 
     // Create a simple map
@@ -37,23 +38,59 @@ function createBAMap() {
         zoom: defaultZoom,
         center: buenosAires
     });
+
+    // Load segments style.
+    map.data.setStyle(function (feature) {
+        return /** @type {google.maps.Data.StyleOptions} */({
+            strokeColor: feature.getProperty('color'),
+            strokeWeight: 3
+        });
+    });
+
+    // pre-set the infoWindow
+    infoWindow = new google.maps.InfoWindow(
+    {
+        content: '',
+        size: new google.maps.Size(10, 30)
+    });
+
+    // create map legend (colors per status)
+    this.createMapLegend();
 }
 
+function createMapLegend() {
+    //get the legend container, create a legend, add a legend renderer fn
+    var $legendContainer = $('#legend-container'),
+        $legend = $('<div id="legend">').appendTo($legendContainer),
+        renderLegend = function (colorValuesArray) {
+            $legend.empty();
+            $.each(colorValuesArray, function (index, val) {
+                var $div = $('<div style="height:25px;">').append($('<div class="legend-color-box">').css({
+                    backgroundColor: val.color,
+                })).append($("<span>").css("lineHeight", "23px").html(val.status));
 
-function initializeHighwaysMap() {
-
-    this.createBAMap();
-    this.loadHighways();
-
-    $.getJSON(segmentsEndpointUrl, function (data) {
-
-        // Load segments style.
-        map.data.setStyle(function (feature) {
-            return /** @type {google.maps.Data.StyleOptions} */({
-                strokeColor: feature.getProperty('color'),
-                strokeWeight: 3
+                $legend.append($div);
             });
-        });
+        }
+
+    //make a legend for the first time
+    renderLegend(colorValues);
+
+    //add the legend to the map
+    map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push($legendContainer[0]);
+}
+
+function updateHighwaysMap() {
+    segments = [];
+    mapDataSegments = [];
+
+    stuckedSegments = new Array();
+    delayedSegments = new Array();
+
+    $.blockUI({ message: '<h3><img src="Images/busy.gif" /> Loading...</h3><br />' });
+
+    // call API service endpoint to get the whole list of segments
+    $.getJSON(segmentsEndpointUrl, function (data) {
 
         // loop into each segment
         $.each(data, function (key, value) {
@@ -78,33 +115,6 @@ function initializeHighwaysMap() {
             //map.data.addGeoJson(json, value.Name);
             segments.push(item);
         });
-
-        // pre-set the infoWindow
-        var infoWindow = new google.maps.InfoWindow(
-            {
-                content: '',
-                size: new google.maps.Size(10, 30)
-            });
-
-        //get the legend container, create a legend, add a legend renderer fn
-        var $legendContainer = $('#legend-container'),
-            $legend = $('<div id="legend">').appendTo($legendContainer),
-            renderLegend = function (colorValuesArray) {
-                $legend.empty();
-                $.each(colorValuesArray, function (index, val) {
-                    var $div = $('<div style="height:25px;">').append($('<div class="legend-color-box">').css({
-                        backgroundColor: val.color,
-                    })).append($("<span>").css("lineHeight", "23px").html(val.status));
-
-                    $legend.append($div);
-                });
-            }
-
-        //make a legend for the first time
-        renderLegend(colorValues);
-
-        //add the legend to the map
-        map.controls[google.maps.ControlPosition.RIGHT_BOTTOM].push($legendContainer[0]);
 
         // add onlick handle to generate and show the infoWindow (current transit status)
         map.data.addListener('click', function (event) {
@@ -139,14 +149,33 @@ function initializeHighwaysMap() {
             infoWindow.open(map, anchor);
         });
 
-        // Show highway buttons
-        // showHighwayButtons();
-
-        // Show info in Detailed Info
+        // render Detailed Info
         showDetailedInfo();
+
+        $.unblockUI;
     });
 }
 
+function initializeHighwaysMap() {
+    this.createMap();
+
+    // load highways calling the service API
+    this.loadHighways();
+
+    // set up timer to automatically update the map info
+    this.setUpdateTimer();
+
+    // get the map info calling the service API
+    this.updateHighwaysMap();
+}
+
+function setUpdateTimer() {
+    var interval = 60000 * 5; // 5 minutes
+
+    var updateTimer = window.setInterval(function () {
+        updateHighwaysMap();
+    }, interval);
+}
 
 function loadHighways() {
 
@@ -192,8 +221,12 @@ function renderHighwayinMap(id) {
 
 $(document).ready(function () {
 
-    $("#set-initial").click(function () {
+    $("#view-initial-map").click(function () {
         setMapInitialPositionAndZoom();
+    });
+
+    $("#refresh-status").click(function () {
+        updateHighwaysMap();
     });
 
     $("#btn-all").click(function () {
@@ -381,8 +414,13 @@ function setMostStuckedMessage() {
             renderHighwayinMap(stuckedId);
         });
 
-        var mostStuckedMessage = "(" + stuckedHighway[0].Highway.Code + ") " + stuckedHighway[0].Highway.Name;
-        $("#msg-most-stucked").text("- The most stucked highway is: " + mostStuckedMessage + ". Please avoid to use it. If you still have to go through it, take your precautions.");
+        if (stuckedHighway.length > 0) {
+            var mostStuckedMessage = "(" + stuckedHighway[0].Highway.Code + ") " + stuckedHighway[0].Highway.Name;
+            $("#msg-most-stucked").text("- The most stucked highway is: " + mostStuckedMessage + ". Please avoid to use it. If you still have to go through it, take your precautions.");
+        }
+        else {
+            $("#msg-most-stucked").text("- Huray! No highways stucked nor delayed. It seems you'll have a nice trip.");
+        }
     }
 }
 
